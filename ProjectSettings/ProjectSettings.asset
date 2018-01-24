@@ -636,13 +636,13 @@ PlayerSettings:
       daydreamIconForeground: {fileID: 0}
       daydreamIconBackground: {fileID: 0}
   cloudServicesEnabled:
-    Collab: 1
+    Collab: 0
     UNet: 1
   facebookSdkVersion: 7.9.4
   apiCompatibilityLevel: 2
-  cloudProjectId: e8b67cdb-ad69-4533-8217-bca84767554a
+  cloudProjectId: 8ab26e17-6f9d-4e60-8ec0-886d76f2d26e
   projectName: 2.5D Proto
-  organizationId: gamernxc
+  organizationId: wieliczk
   cloudEnabled: 0
   enableNativePlatformBackendsForNewInputSystem: 0
   disableOldInputManagerSupport: 0
