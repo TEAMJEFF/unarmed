@@ -57,16 +57,18 @@ public class GrapplingHook : MonoBehaviour {
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         //float hitdist = 0.0f;
         //if (playerPlane.Raycast(ray, out hitdist))
-        if (!IsFlying && (transform.position.z > Input.mousePosition.z) && Physics.Raycast(ray, out hit, maxDistance, cullingmask))
+        if (Physics.Raycast(ray, out hit, maxDistance, cullingmask))
         {
             //Vector3 targetPoint = ray.GetPoint(hitdist);
             //Debug.Log("Actually hits?");
-            IsFlying = true;
-            //loc = targetPoint;
             loc = hit.point;
-            //FPC.CanMove = false;
-            LR.enabled = true;
-            LR.SetPosition(1, loc);
+            if (loc.z > transform.position.z)
+            {
+                LR.enabled = true;
+                LR.SetPosition(1, loc);
+                IsFlying = true;
+            }
+            
         }
     }
 
