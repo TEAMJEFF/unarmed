@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.3762759, g: 0.420286, b: 0.46360517, a: 1}
+  m_IndirectSpecularColor: {r: 0.37629455, g: 0.42029244, b: 0.46360803, a: 1}
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
@@ -1039,7 +1039,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 408730, guid: 7737647c22c1fc64a88d5cd030c352ce, type: 2}
       propertyPath: m_LocalPosition.z
-      value: 201.7
+      value: 200.96
       objectReference: {fileID: 0}
     - target: {fileID: 408730, guid: 7737647c22c1fc64a88d5cd030c352ce, type: 2}
       propertyPath: m_LocalRotation.x
@@ -1568,20 +1568,6 @@ Prefab:
 GameObject:
   m_PrefabParentObject: {fileID: 149790, guid: 7737647c22c1fc64a88d5cd030c352ce, type: 2}
   m_PrefabInternal: {fileID: 845612223}
---- !u!114 &1290072940
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1290072939}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ba3076483b13e1d4da3afdfec3566557, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  cam: {fileID: 1999170505}
-  attached: 0
-  speed: 5
 --- !u!114 &1290072941 stripped
 MonoBehaviour:
   m_PrefabParentObject: {fileID: 11469404, guid: 7737647c22c1fc64a88d5cd030c352ce,
@@ -1604,6 +1590,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cam: {fileID: 2145125661}
+  rb: {fileID: 0}
   cullingmask:
     serializedVersion: 2
     m_Bits: 4294966527
@@ -1614,6 +1601,7 @@ MonoBehaviour:
   hand: {fileID: 599944615}
   FPC: {fileID: 1290072941}
   LR: {fileID: 1290072948}
+  controller: {fileID: 0}
 --- !u!120 &1290072948
 LineRenderer:
   m_ObjectHideFlags: 0
