@@ -41,6 +41,8 @@ public class GrapplingHook : MonoBehaviour {
             IsFlying = false;
             //FPC.CanMove = true;
             LR.enabled = false;
+            rb.useGravity = true;
+            FPC.m_GravityMultiplier = 2f;
         }
 	}
 
@@ -74,14 +76,18 @@ public class GrapplingHook : MonoBehaviour {
 
     public void Flying()
     {
+        rb.useGravity = false;
+        FPC.m_GravityMultiplier = 0f;
         transform.position = Vector3.Lerp(transform.position, loc, speed * Time.deltaTime / Vector3.Distance(transform.position, loc));
         LR.SetPosition(0, hand.position);
 
         if(Vector3.Distance(transform.position, loc) < 0.5f)
         {
             IsFlying = false;
+            rb.useGravity = true;
             //FPC.CanMove = true;
             LR.enabled = false;
+            FPC.m_GravityMultiplier = 2f;
         }
     }
 }
