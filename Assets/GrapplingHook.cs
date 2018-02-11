@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using UnityStandardAssets.Characters.ThirdPerson;
 using UnityEngine;
 
-public class GrapplingHook : MonoBehaviour {
+public class GrapplingHook : MonoBehaviour
+{
 
     public Camera cam;
     public RaycastHit hit;
@@ -13,7 +14,9 @@ public class GrapplingHook : MonoBehaviour {
     public int maxDistance;
 
     public bool IsFlying;
+    public bool IsSmaller;
     public Vector3 loc;
+    public GameObject unitHit;
 
     public float speed = 10;
     public Transform hand;
@@ -23,19 +26,24 @@ public class GrapplingHook : MonoBehaviour {
 
     // https://www.youtube.com/watch?time_continue=42&v=rhNmjKedcjw
     // Use this for initialization
-    void Start () {
+    void Start()
+    {
         //Cursor.lockState = CursorLockMode.Locked;
         rb = GetComponent<Rigidbody>();
     }
-	
-	// Update is called once per frame
-	void Update () {
+
+    // Update is called once per frame
+    void Update()
+    {
         if (Input.GetButtonDown("Fire1"))
             Findspot();
 
         if (IsFlying)
             Flying();
-        
+
+        if (IsSmaller)
+            Pulling();
+
         if (Input.GetButtonUp("Fire1") && IsFlying)
         {
             IsFlying = false;
@@ -44,7 +52,7 @@ public class GrapplingHook : MonoBehaviour {
             rb.useGravity = true;
             FPC.m_GravityMultiplier = 2f;
         }
-	}
+    }
 
     public void Findspot()
     {
@@ -68,9 +76,20 @@ public class GrapplingHook : MonoBehaviour {
             {
                 LR.enabled = true;
                 LR.SetPosition(1, loc);
-                IsFlying = true;
+                if (hit.transform.gameObject.layer == LayerMask.NameToLayer("Smaller"))
+                {
+                    unitHit = hit.transform.gameObject;
+                    IsSmaller = true;
+                    //Pulling();
+                }
+                else
+                {
+                    IsFlying = true;
+                    //Flying();
+                }
             }
-            
+
+
         }
     }
 
@@ -81,13 +100,28 @@ public class GrapplingHook : MonoBehaviour {
         transform.position = Vector3.Lerp(transform.position, loc, speed * Time.deltaTime / Vector3.Distance(transform.position, loc));
         LR.SetPosition(0, hand.position);
 
-        if(Vector3.Distance(transform.position, loc) < 0.5f)
+        if (Vector3.Distance(transform.position, loc) < 0.5f)
         {
             IsFlying = false;
             rb.useGravity = true;
             //FPC.CanMove = true;
             LR.enabled = false;
             FPC.m_GravityMultiplier = 2f;
+        }
+    }
+    public void Pulling()
+    {
+        //unitHit.transform.position = Vector3.Lerp(loc, transform.position, speed * Time.deltaTime / Vector3.Distance(loc, transform.position));
+        Vector3 direction = unitHit.transform.position - transform.position;
+        //unitHit.GetComponent().AddForce(10f * direction);
+        float step = speed * Time.deltaTime;
+        unitHit.transform.position = Vector3.MoveTowards(unitHit.transform.position, hand.position, step);
+        LR.SetPosition(0, hand.position);
+        LR.SetPosition(1, unitHit.transform.position);
+        if (Vector3.Distance(unitHit.transform.position, hand.position) < 1f)
+        {
+            IsSmaller = false;
+            LR.enabled = false;
         }
     }
 }
