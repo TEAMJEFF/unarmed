@@ -103,8 +103,6 @@ public class GrapplingHook : MonoBehaviour
         // rb.useGravity = false;
         FPC.m_GravityMultiplier = 0.1f;
         
-		// transform.position = Vector3.Lerp(transform.position, target, speed * Time.deltaTime / Vector3.Distance(transform.position, target));
-        
 		float targetDistance = Vector3.Distance (transform.position, target);
 
 		Debug.Log ("Distance: " + targetDistance.ToString() + ", hookLength: " + hookLength.ToString() + "MAXHOOKDISTANCE: " + MAXHOOKDISTANCE.ToString());
@@ -113,13 +111,16 @@ public class GrapplingHook : MonoBehaviour
 
 			LR.SetPosition (0, hand.position);
 
-			if (Vector3.Distance (transform.position, target) < 0.5f) {
-				IsHooked = false;
-				rb.useGravity = true;
-				LR.enabled = false;
-				FPC.m_GravityMultiplier = 2f;
+			//if (Input.GetAxis ("Mouse X") < 0 || Input.GetAxis("Mouse X") > 0 || Input.GetAxis("Mouse Y") < 0 || Input.GetAxis("Mouse Y") > 0) {
+
+			// Mouse Movement - downward only
+			if (Input.GetAxis("Mouse Y") < 0) {
+				Debug.Log ("Mouse Moved on Hook");
+				transform.position = Vector3.Lerp(transform.position, target, speed * Time.deltaTime / Vector3.Distance(transform.position, target));
 			}
+
 		} else {
+			Debug.Log ("Hook length depleted.");
 			IsHooked = false;
 			LR.enabled = false;
 			rb.useGravity = true;
