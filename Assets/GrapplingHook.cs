@@ -76,7 +76,7 @@ public class GrapplingHook : MonoBehaviour
             {
                 LR.enabled = true;
                 LR.SetPosition(1, loc);
-                if (hit.transform.gameObject.layer == LayerMask.NameToLayer("Smaller"))
+                if (hit.transform.gameObject.layer == LayerMask.NameToLayer("Unanchored"))
                 {
                     unitHit = hit.transform.gameObject;
                     IsSmaller = true;
@@ -115,7 +115,8 @@ public class GrapplingHook : MonoBehaviour
         Vector3 direction = unitHit.transform.position - transform.position;
         //unitHit.GetComponent().AddForce(10f * direction);
         float step = speed * Time.deltaTime;
-        unitHit.transform.position = Vector3.MoveTowards(unitHit.transform.position, hand.position, step);
+        //unitHit.transform.position = Vector3.MoveTowards(unitHit.transform.position, hand.position, step);
+		unitHit.transform.position = Vector3.MoveTowards(unitHit.transform.position, Vector3.back, step);
         LR.SetPosition(0, hand.position);
         LR.SetPosition(1, unitHit.transform.position);
         if (Vector3.Distance(unitHit.transform.position, hand.position) < 1f)
