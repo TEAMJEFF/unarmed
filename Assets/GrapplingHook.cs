@@ -11,14 +11,14 @@ public class GrapplingHook : MonoBehaviour
     private Rigidbody rb;
 
     public LayerMask cullingmask;
-    public int maxDistance;
+    public float maxDistance = 0.01f;
 
-    public bool IsFlying;
+    public bool IsHooked;
     public bool IsSmaller;
-    public Vector3 loc;
+    public Vector3 target;
     public GameObject unitHit;
 
-    public float speed = 10;
+    public float speed = 25;
     public Transform hand;
 
     public ThirdPersonCharacter FPC;
@@ -38,15 +38,15 @@ public class GrapplingHook : MonoBehaviour
         if (Input.GetButtonDown("Fire1"))
             Findspot();
 
-        if (IsFlying)
-            Flying();
+        if (IsHooked)
+            Hooking();
 
         if (IsSmaller)
             Pulling();
 
-        if (Input.GetButtonUp("Fire1") && IsFlying)
+        if (Input.GetButtonUp("Fire1") && IsHooked)
         {
-            IsFlying = false;
+            IsHooked = false;
             //FPC.CanMove = true;
             LR.enabled = false;
             rb.useGravity = true;
@@ -63,55 +63,63 @@ public class GrapplingHook : MonoBehaviour
         //Vector3 rayOrgin = cam.ViewportToWorldPoint(Input.mousePosition);
         //Debug.Log(rayOrgin);
         //Debug.DrawRay(rayOrgin, guess);
+
         Plane playerPlane = new Plane(Vector3.up, transform.position);
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+
         //float hitdist = 0.0f;
         //if (playerPlane.Raycast(ray, out hitdist))
+
         if (Physics.Raycast(ray, out hit, maxDistance, cullingmask))
         {
             //Vector3 targetPoint = ray.GetPoint(hitdist);
             //Debug.Log("Actually hits?");
-            loc = hit.point;
-            if (loc.z > transform.position.z)
+            target = hit.point;
+            if (target.z > transform.position.z)
             {
                 LR.enabled = true;
-                LR.SetPosition(1, loc);
+                LR.SetPosition(1, target);
                 if (hit.transform.gameObject.layer == LayerMask.NameToLayer("Smaller"))
                 {
                     unitHit = hit.transform.gameObject;
                     IsSmaller = true;
-                    //Pulling();
                 }
                 else
                 {
-                    IsFlying = true;
-                    //Flying();
+                    IsHooked = true;            
                 }
             }
-
-
         }
     }
 
-    public void Flying()
+    public void Hooking()
     {
-        rb.useGravity = false;
-        FPC.m_GravityMultiplier = 0f;
-        transform.position = Vector3.Lerp(transform.position, loc, speed * Time.deltaTime / Vector3.Distance(transform.position, loc));
-        LR.SetPosition(0, hand.position);
+        // rb.useGravity = false;
+        FPC.m_GravityMultiplier = -1.0f;
+        
+		// transform.position = Vector3.Lerp(transform.position, target, speed * Time.deltaTime / Vector3.Distance(transform.position, target));
+        
+		if (Vector3.Distance (transform.position, target) < maxDistance) {
 
-        if (Vector3.Distance(transform.position, loc) < 0.5f)
-        {
-            IsFlying = false;
-            rb.useGravity = true;
-            //FPC.CanMove = true;
-            LR.enabled = false;
-            FPC.m_GravityMultiplier = 2f;
-        }
+			LR.SetPosition (0, hand.position);
+
+			if (Vector3.Distance (transform.position, target) < 0.5f) {
+				IsHooked = false;
+				rb.useGravity = true;
+				//FPC.CanMove = true;
+				LR.enabled = false;
+				FPC.m_GravityMultiplier = 2f;
+			}
+		} else {
+			IsHooked = false;
+			LR.enabled = false;
+			rb.useGravity = true;
+			FPC.m_GravityMultiplier = 2f;
+		}
     }
     public void Pulling()
     {
-        //unitHit.transform.position = Vector3.Lerp(loc, transform.position, speed * Time.deltaTime / Vector3.Distance(loc, transform.position));
+        //unitHit.transform.position = Vector3.Lerp(target, transform.position, speed * Time.deltaTime / Vector3.Distance(target, transform.position));
         Vector3 direction = unitHit.transform.position - transform.position;
         //unitHit.GetComponent().AddForce(10f * direction);
         float step = speed * Time.deltaTime;
