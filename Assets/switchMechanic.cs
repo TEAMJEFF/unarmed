@@ -5,11 +5,14 @@ using UnityEngine;
 public class switchMechanic : MonoBehaviour {
 
 	public GameObject activated;
+	private ParticleSystem psys;
 
 	// Use this for initialization
 	void Start () 
 	{
 		activated = this.gameObject.transform.GetChild (0).gameObject;
+		//psys = GetComponent<ParticleSystem> ();
+
 	}
 	
 	// Update is called once per frame
@@ -21,6 +24,9 @@ public class switchMechanic : MonoBehaviour {
 	void OnCollisionEnter(Collision collision)
 	{
 		//activated = this.gameObject.transform.GetChild (0);
+		//psys.Play();
 		Destroy(activated);
 	}
+
+
 }
