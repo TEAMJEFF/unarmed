@@ -11,12 +11,14 @@ public class GrapplingHook : MonoBehaviour
     private Rigidbody rb;
 
     public LayerMask cullingmask;
-    public float maxDistance = 0.01f;
+    public const float MAXHOOKDISTANCE = 15.0f;
 
     public bool IsHooked;
     public bool IsSmaller;
     public Vector3 target;
     public GameObject unitHit;
+	public float hookLength = 0f;
+	public const float hookDelta = 0.2f;
 
     public float speed = 25;
     public Transform hand;
@@ -47,6 +49,7 @@ public class GrapplingHook : MonoBehaviour
         if (Input.GetButtonUp("Fire1") && IsHooked)
         {
             IsHooked = false;
+			hookLength = 0;
             //FPC.CanMove = true;
             LR.enabled = false;
             rb.useGravity = true;
@@ -70,13 +73,16 @@ public class GrapplingHook : MonoBehaviour
         //float hitdist = 0.0f;
         //if (playerPlane.Raycast(ray, out hitdist))
 
-        if (Physics.Raycast(ray, out hit, maxDistance, cullingmask))
+        if (Physics.Raycast(ray, out hit, MAXHOOKDISTANCE, cullingmask))
         {
             //Vector3 targetPoint = ray.GetPoint(hitdist);
             //Debug.Log("Actually hits?");
             target = hit.point;
             if (target.z > transform.position.z)
             {
+				hookLength = Vector3.Distance (transform.position, target) + hookDelta;
+				Debug.Log ("hookLength: " + hookLength.ToString ());
+
                 LR.enabled = true;
                 LR.SetPosition(1, target);
                 if (hit.transform.gameObject.layer == LayerMask.NameToLayer("Smaller"))
@@ -95,18 +101,21 @@ public class GrapplingHook : MonoBehaviour
     public void Hooking()
     {
         // rb.useGravity = false;
-        FPC.m_GravityMultiplier = -1.0f;
+        FPC.m_GravityMultiplier = 0.1f;
         
 		// transform.position = Vector3.Lerp(transform.position, target, speed * Time.deltaTime / Vector3.Distance(transform.position, target));
         
-		if (Vector3.Distance (transform.position, target) < maxDistance) {
+		float targetDistance = Vector3.Distance (transform.position, target);
+
+		Debug.Log ("Distance: " + targetDistance.ToString() + ", hookLength: " + hookLength.ToString() + "MAXHOOKDISTANCE: " + MAXHOOKDISTANCE.ToString());
+
+		if (targetDistance < hookLength) {
 
 			LR.SetPosition (0, hand.position);
 
 			if (Vector3.Distance (transform.position, target) < 0.5f) {
 				IsHooked = false;
 				rb.useGravity = true;
-				//FPC.CanMove = true;
 				LR.enabled = false;
 				FPC.m_GravityMultiplier = 2f;
 			}
