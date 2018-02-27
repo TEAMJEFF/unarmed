@@ -74,7 +74,7 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 			*/
 
 			// If key hit and already not slowed down and not in cool down
-			if (Input.GetKeyDown (KeyCode.E) && !isSlowed && !slowCooldown) 
+			if (Input.GetKeyDown (KeyCode.LeftShift) && !isSlowed && !slowCooldown) 
 			{
 				Debug.Log ("KEY PRESSED");
 				// Do something
@@ -86,7 +86,7 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 			}
 
 			// If key released and cool down is true
-			if (Input.GetKeyUp (KeyCode.E) && slowCooldown) 
+			if (Input.GetKeyUp (KeyCode.LeftShift) && slowCooldown) 
 			{
 				Debug.Log ("KEY RELEASED");
 				isSlowed = false;
@@ -143,7 +143,7 @@ namespace UnityStandardAssets.Characters.ThirdPerson
             }
 #if !MOBILE_INPUT
 			// walk speed multiplier
-	        if (Input.GetKey(KeyCode.LeftShift)) m_Move *= 0.5f;
+	        // if (Input.GetKey(KeyCode.LeftShift)) m_Move *= 0.5f;
 #endif
 
             // pass all parameters to the character control script
