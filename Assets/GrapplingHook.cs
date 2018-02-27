@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityStandardAssets.Characters.ThirdPerson;
 using UnityEngine;
-// test
+
 public class GrapplingHook : MonoBehaviour
 {
 
@@ -14,12 +14,13 @@ public class GrapplingHook : MonoBehaviour
     public const float MAXHOOKDISTANCE = 15.0f;
 
     public bool IsHooked;
-    public bool IsSmaller;
+    public bool IsHooking;
     public Vector3 target;
     public GameObject unitHit;
 	public float hookLength = 0f;
 	public const float hookDelta = 0.2f;
 
+	public const float downMouseThreshold = -0.25f;
     public float speed = 25;
     public Transform hand;
 
@@ -43,17 +44,24 @@ public class GrapplingHook : MonoBehaviour
         if (IsHooked)
             Hooking();
 
-        if (IsSmaller)
+        if (IsHooking)
             Pulling();
 
-        if (Input.GetButtonUp("Fire1") && IsHooked)
+        if (Input.GetButtonUp("Fire1"))
         {
-            IsHooked = false;
-			hookLength = 0;
-            //FPC.CanMove = true;
-            LR.enabled = false;
-            rb.useGravity = true;
-            FPC.m_GravityMultiplier = 2f;
+			if (IsHooked) {
+				IsHooked = false;
+				hookLength = 0;
+				//FPC.CanMove = true;
+				LR.enabled = false;
+				rb.useGravity = true;
+				FPC.m_GravityMultiplier = 2f;
+
+			} else if (IsHooking) {
+				
+				IsHooking = false;
+				LR.enabled = false;
+			}
         }
     }
 
@@ -85,10 +93,10 @@ public class GrapplingHook : MonoBehaviour
 
                 LR.enabled = true;
                 LR.SetPosition(1, target);
-                if (hit.transform.gameObject.layer == LayerMask.NameToLayer("Smaller"))
+                if (hit.transform.gameObject.layer == LayerMask.NameToLayer("Unanchored"))
                 {
                     unitHit = hit.transform.gameObject;
-                    IsSmaller = true;
+                    IsHooking = true;
                 }
                 else
                 {
@@ -114,9 +122,11 @@ public class GrapplingHook : MonoBehaviour
 			//if (Input.GetAxis ("Mouse X") < 0 || Input.GetAxis("Mouse X") > 0 || Input.GetAxis("Mouse Y") < 0 || Input.GetAxis("Mouse Y") > 0) {
 
 			// Mouse Movement - downward only
-			if (Input.GetAxis("Mouse Y") < 0) {
+			if (Input.GetAxis("Mouse Y") < downMouseThreshold) {
 				Debug.Log ("Mouse Moved on Hook");
-				transform.position = Vector3.Lerp(transform.position, target, speed * Time.deltaTime / Vector3.Distance(transform.position, target));
+				// TODO: Should affect character momentum/direction, not linear interpolation
+				//transform.position = Vector3.Lerp(transform.position, target, speed * Time.deltaTime / Vector3.Distance(transform.position, target));
+				transform.position = Vector3.MoveTowards(transform.position, target, speed * Time.deltaTime);
 			}
 
 		} else {
@@ -132,13 +142,21 @@ public class GrapplingHook : MonoBehaviour
         //unitHit.transform.position = Vector3.Lerp(target, transform.position, speed * Time.deltaTime / Vector3.Distance(target, transform.position));
         Vector3 direction = unitHit.transform.position - transform.position;
         //unitHit.GetComponent().AddForce(10f * direction);
-        float step = speed * Time.deltaTime;
-        unitHit.transform.position = Vector3.MoveTowards(unitHit.transform.position, hand.position, step);
-        LR.SetPosition(0, hand.position);
-        LR.SetPosition(1, unitHit.transform.position);
-        if (Vector3.Distance(unitHit.transform.position, hand.position) < 1f)
-        {
-            IsSmaller = false;
+        
+		float targetDistance = Vector3.Distance (transform.position, target);
+
+		if (targetDistance < hookLength) {
+
+			if (Input.GetAxis ("Mouse Y") < downMouseThreshold) {
+				unitHit.transform.position = Vector3.MoveTowards (unitHit.transform.position, hand.position, (speed * Time.deltaTime));
+			}
+
+			LR.SetPosition (0, hand.position);
+			LR.SetPosition (1, unitHit.transform.position);
+        
+		} else {
+			
+            IsHooking = false;
             LR.enabled = false;
         }
     }
