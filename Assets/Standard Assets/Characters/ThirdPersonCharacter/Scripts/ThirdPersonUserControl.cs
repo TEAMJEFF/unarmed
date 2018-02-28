@@ -13,11 +13,17 @@ namespace UnityStandardAssets.Characters.ThirdPerson
         private Vector3 m_Move;
         private bool m_Jump;                      // the world-relative desired move direction, calculated from the camForward and user input.
 
+		private const float NORMALTIME = 1.0f;
+		private const float SLOWTIME = 0.4f;
+		public const float TIMELIMIT = 5.0f;		// TIMELIMIT is the maximum time that time can be slowed, in seconds
+		private const float REGENRATE = 0.05f;		// timeRegen is how much timePool is regenerated per tick
+		private const float COOLDOWNRATE = 5.0f;
+
 		private bool isSlowed = false;
-		private bool slowCooldown = false;
+		public bool inCooldown = false;
         
-		private float slowTime;
-		private float cooldownTime;
+		public float timePool = TIMELIMIT;			// timePool is how much time the player can currently slow down for
+		public float cooldownTimer;
 
         private void Start()
         {
@@ -57,74 +63,62 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 			// Forced forward movement
 			v = 1f;
 
+			// When LSHIFT is pressed:
+			if (Input.GetKey(KeyCode.LeftShift)) {
 
-            bool crouch = Input.GetKey(KeyCode.C);
+				// Check if timePool has time remaining in it and isn't in cooldown lock
+				if (timePool > 0 && !inCooldown) {
 
+					// if so, slow time and reduce the pool
+					Time.timeScale = SLOWTIME;
+					timePool -= (Time.deltaTime * (1/SLOWTIME));
+					isSlowed = true;
+					
+				} else if (timePool >= 0 && inCooldown) {
 
-			// I think this shit works
-			// Pretty sure it works correctly
-			// Commented out to try and get a timer working
-			/*
-			if(Input.GetKey(KeyCode.E))
-			{
-				Time.timeScale = 0.5f;
-			} else {
-				Time.timeScale = 1f;
-			}
-			*/
+					// if timePool has time but player is in cooldown lock
+					if (timePool < TIMELIMIT) {
+						timePool += REGENRATE;
+						if (timePool > TIMELIMIT) {
+							timePool = TIMELIMIT;
+						}
+					}
 
-			// If key hit and already not slowed down and not in cool down
-			if (Input.GetKeyDown (KeyCode.LeftShift) && !isSlowed && !slowCooldown) 
-			{
-				Debug.Log ("KEY PRESSED");
-				// Do something
-				isSlowed = true;
-				slowCooldown = true;
-				slowTime = 5f;
-				cooldownTime = 5f;
+					// TODO: Flash UI
 
-			}
+				} else if (timePool <= 0) {
 
-			// If key released and cool down is true
-			if (Input.GetKeyUp (KeyCode.LeftShift) && slowCooldown) 
-			{
-				Debug.Log ("KEY RELEASED");
-				isSlowed = false;
-			}
+					Debug.Log ("Trigger cooldown");
 
-			// Slow time for a period of time  
-			if (isSlowed) 
-			{
-				Debug.Log ("SLOWED");
-				// Timer to slow for a time and end by making isSlowed = true
-				Time.timeScale = 0.5f;
-				slowTime -= Time.deltaTime;
-				//timer(slowTime);
-				//Debug.Log (slowTime);
-				if (slowTime < 0) 
-				{
+					// Disable slow-time
+					Time.timeScale = NORMALTIME;
 					isSlowed = false;
-					//Time.timeScale = 1f;
-					// Reset timer
-					slowTime = 5f;
+
+					// Normalize to zero, start cooldown timer
+					timePool = 0;
+					inCooldown = true;
+					cooldownTimer = COOLDOWNRATE;
 				}
+			} else {
+
+				// If LSHIFT not down, regen timePool
+				isSlowed = false;
+				Time.timeScale = NORMALTIME;
+				if (timePool < TIMELIMIT) {
+					timePool += REGENRATE;
+					if (timePool > TIMELIMIT) {
+						timePool = TIMELIMIT;
+					}
+				}
+
 			}
 
-			// no longer slowed, start cooldown 
-			if (!isSlowed && slowCooldown) 
+			// In cooldown lock but not pressing LSHIFT
+			if (inCooldown) 
 			{
-				Debug.Log ("COOLDOWN");
-				if (Time.timeScale < 1f) 
-				{
-					Time.timeScale = 1f;
-				}
-				cooldownTime -= Time.deltaTime;
-				Debug.Log (cooldownTime);
-				//timer (cooldownTime);
-				if (cooldownTime < 0) 
-				{
-					slowCooldown = false;
-					cooldownTime = 5f;
+				cooldownTimer -= Time.deltaTime;
+				if (cooldownTimer <= 0) {
+					inCooldown = false;
 				}
 			}
 					
@@ -141,12 +135,9 @@ namespace UnityStandardAssets.Characters.ThirdPerson
                 // we use world-relative directions in the case of no main camera
                 m_Move = v*Vector3.forward + h*Vector3.right;
             }
-#if !MOBILE_INPUT
-			// walk speed multiplier
-	        // if (Input.GetKey(KeyCode.LeftShift)) m_Move *= 0.5f;
-#endif
 
             // pass all parameters to the character control script
+			bool crouch = false;
             m_Character.Move(m_Move, crouch, m_Jump);
             m_Jump = false;
         }
