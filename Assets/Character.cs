@@ -17,10 +17,19 @@ public class Character : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         rb = GetComponent<Rigidbody>();
+
 	}
 	
 	// Update is called once per frame
 	void Update () {
+		// Pause game on start
+		while (Time.timeSinceLevelLoad < 100) 
+		{
+			Time.timeScale = 0f;
+		}
+
+		Time.timeScale = 1f;
+
 		if (Input.GetButtonDown("Fire1"))
         {
             Vector3 mousePos = new Vector3(Input.GetAxis("Mouse X"), Input.GetAxis("Mouse Y"), 0);
