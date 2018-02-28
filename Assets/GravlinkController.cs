@@ -5,7 +5,10 @@ using UnityEngine;
 public class GravlinkController : MonoBehaviour {
 
 	public const float MAXHOOKDISTANCE = 20.0f;
+	private const float HOOKEPSILON = 0.05f;
+	private const float MOUSEPULLTHRESHOLD = -0.25f;
 
+	public float speed;
 	public GameObject anchor;
 	public LayerMask cullingmask;
 	public Transform hand;
@@ -68,9 +71,9 @@ public class GravlinkController : MonoBehaviour {
 		if (Physics.Raycast(ray, out hit, MAXHOOKDISTANCE, cullingmask)) {
 
 			if (hit.point.z > transform.position.z) {
-				Debug.Log ("Hit");
 
-				hookLength = Vector3.Distance (rb.position, hit.point);
+				hookLength = Vector3.Distance (rb.position, hit.point) + HOOKEPSILON;
+				Debug.Log ("hookLength: " + hookLength.ToString ());
 
 				// Move anchor to hitloc and attach a HingeJoint to it
 				anchor.transform.position = hit.point;
@@ -102,6 +105,27 @@ public class GravlinkController : MonoBehaviour {
 
 	public void Swinging() {
 
+		float targetDistance = Vector3.Distance (transform.position, hit.point);
+
+		Debug.Log ("hookLength: " + hookLength.ToString () + ", targetDistance: " + targetDistance.ToString ());
+
+		if (targetDistance < hookLength) {
+			lr.SetPosition (0, hand.position);
+			rb.AddForce (rb.velocity);
+
+			if (Input.GetAxis ("Mouse Y") < MOUSEPULLTHRESHOLD) {
+				transform.position = Vector3.MoveTowards(transform.position, hit.point, 20 * Time.deltaTime);
+			}
+
+		} else {
+			isHooked = false;
+			lr.enabled = false;
+			Destroy (joint);
+			Destroy (anchorJoint);
+
+			hookLength = 0;
+			rb.useGravity = true;
+		}
 	}
 
 	public void Pulling() {
