@@ -24,7 +24,7 @@ public class GrapplingHook : MonoBehaviour
 	public LineRenderer LR;
 
 	private Rigidbody rb;
-	private Vector3 lastVelocity = Vector3.zero;
+	private Vector3 lastVelocity;
 	private Vector3 acceleration;
 	private Vector3 nextPosition;
 
@@ -72,6 +72,8 @@ public class GrapplingHook : MonoBehaviour
 		Plane playerPlane = new Plane(Vector3.up, transform.position);
 		Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
+		lastVelocity = rb.velocity;
+
 		Debug.Log ("Cast");
 
 		if (Physics.Raycast(ray, out hit, MAXHOOKDISTANCE, cullingmask))
@@ -113,22 +115,24 @@ public class GrapplingHook : MonoBehaviour
 
 			LR.SetPosition (0, hand.position);
 
+			Debug.Log ("Accel: " + acceleration.magnitude.ToString() + " LastVelo: " + lastVelocity.magnitude.ToString() + " Velo: " + rb.velocity.magnitude.ToString());
+
 			acceleration = (rb.velocity - lastVelocity) / Time.deltaTime;
+			if (acceleration.magnitude > 10.0f) {
+				acceleration = Vector3.zero;
+			}
 			rb.velocity = rb.velocity + acceleration * Time.deltaTime;
-			nextPosition = rb.position + rb.velocity * Time.deltaTime;
+//			nextPosition = rb.position + rb.velocity * Time.deltaTime;
 			lastVelocity = rb.velocity;
 
 //			Debug.Log ("nextPosition: " + nextPosition.ToString ());
 //
-//			if (Vector3.Distance (nextPosition, hit.point) > hookLength - 0.25f) {
-//				nextPosition = Vector3.Normalize(hit.point - nextPosition) * hookLength;
+//			if (Vector3.Distance (nextPosition, target) > hookLength - 0.25f) {
+//				Vector3 deltaVector = (nextPosition - target).normalized * hookLength;
+//				nextPosition = nextPosition + deltaVector;
 //				Debug.Log ("Corrected nextPosition: " + nextPosition.ToString ());
 //			}
-//
-			rb.position = nextPosition;
-
-			//if (Input.GetAxis ("Mouse X") < 0 || Input.GetAxis("Mouse X") > 0 || Input.GetAxis("Mouse Y") < 0 || Input.GetAxis("Mouse Y") > 0) {
-
+		
 			// Mouse Movement - downward only
 			if (Input.GetAxis("Mouse Y") < downMouseThreshold) {
 
