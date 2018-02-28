@@ -17,11 +17,11 @@ public class Character : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         rb = GetComponent<Rigidbody>();
-
 	}
 	
 	// Update is called once per frame
 	void Update () {
+<<<<<<< HEAD
 		// Pause game on start
 		if (Time.timeSinceLevelLoad < 100) 
 		{
@@ -29,6 +29,8 @@ public class Character : MonoBehaviour {
 		}
 
 
+=======
+>>>>>>> parent of 946e6ef... Respawn/PressurePlate
 		if (Input.GetButtonDown("Fire1"))
         {
             Vector3 mousePos = new Vector3(Input.GetAxis("Mouse X"), Input.GetAxis("Mouse Y"), 0);
