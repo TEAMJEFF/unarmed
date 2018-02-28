@@ -23,11 +23,12 @@ public class Character : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		// Pause game on start
-		if (Time.timeSinceLevelLoad < 100) 
+		while (Time.timeSinceLevelLoad < 100) 
 		{
-			Time.f
+			Time.timeScale = 0f;
 		}
 
+		Time.timeScale = 1f;
 
 		if (Input.GetButtonDown("Fire1"))
         {
