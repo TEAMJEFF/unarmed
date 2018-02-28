@@ -8,24 +8,25 @@ public class GrapplingHook : MonoBehaviour
 
 	public Camera cam;
 	public RaycastHit hit;
-	private Rigidbody rb;
-
 	public LayerMask cullingmask;
-	public const float MAXHOOKDISTANCE = 15.0f;
-
+	public const float MAXHOOKDISTANCE = 20.0f;
 	public bool IsHooked;
 	public bool IsHooking;
 	public Vector3 target;
 	public GameObject unitHit;
 	public float hookLength = 0f;
 	public const float hookDelta = 0.2f;
-
 	public const float downMouseThreshold = -0.25f;
 	public float speed = 25;
 	public Transform hand;
 
 	public ThirdPersonCharacter FPC;
 	public LineRenderer LR;
+
+	private Rigidbody rb;
+	private Vector3 lastVelocity = Vector3.zero;
+	private Vector3 acceleration;
+	private Vector3 nextPosition;
 
 	// https://www.youtube.com/watch?time_continue=42&v=rhNmjKedcjw
 	// Use this for initialization
@@ -106,23 +107,38 @@ public class GrapplingHook : MonoBehaviour
 
 		float targetDistance = Vector3.Distance (transform.position, target);
 
-		Debug.Log ("Distance: " + targetDistance.ToString() + ", hookLength: " + hookLength.ToString() + "MAXHOOKDISTANCE: " + MAXHOOKDISTANCE.ToString());
+//		Debug.Log ("Distance: " + targetDistance.ToString() + ", hookLength: " + hookLength.ToString() + "MAXHOOKDISTANCE: " + MAXHOOKDISTANCE.ToString());
 
 		if (targetDistance < hookLength) {
 
 			LR.SetPosition (0, hand.position);
 
+			acceleration = (rb.velocity - lastVelocity) / Time.deltaTime;
+			rb.velocity = rb.velocity + acceleration * Time.deltaTime;
+			nextPosition = rb.position + rb.velocity * Time.deltaTime;
+			lastVelocity = rb.velocity;
+
+//			Debug.Log ("nextPosition: " + nextPosition.ToString ());
+//
+//			if (Vector3.Distance (nextPosition, hit.point) > hookLength - 0.25f) {
+//				nextPosition = Vector3.Normalize(hit.point - nextPosition) * hookLength;
+//				Debug.Log ("Corrected nextPosition: " + nextPosition.ToString ());
+//			}
+//
+			rb.position = nextPosition;
+
 			//if (Input.GetAxis ("Mouse X") < 0 || Input.GetAxis("Mouse X") > 0 || Input.GetAxis("Mouse Y") < 0 || Input.GetAxis("Mouse Y") > 0) {
 
 			// Mouse Movement - downward only
 			if (Input.GetAxis("Mouse Y") < downMouseThreshold) {
-				Debug.Log ("Mouse Moved on Hook");
+
 				// TODO: Should affect character momentum/direction, not linear interpolation
 				//transform.position = Vector3.Lerp(transform.position, target, speed * Time.deltaTime / Vector3.Distance(transform.position, target));
 				transform.position = Vector3.MoveTowards(transform.position, target, speed * Time.deltaTime);
 			}
 
 		} else {
+
 			Debug.Log ("Hook length depleted.");
 			IsHooked = false;
 			LR.enabled = false;

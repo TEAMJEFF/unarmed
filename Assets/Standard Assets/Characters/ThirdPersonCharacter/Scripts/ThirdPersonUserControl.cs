@@ -14,7 +14,7 @@ namespace UnityStandardAssets.Characters.ThirdPerson
         private bool m_Jump;                      // the world-relative desired move direction, calculated from the camForward and user input.
 
 		private const float NORMALTIME = 1.0f;
-		private const float SLOWTIME = 0.01f; // 0.4f;
+		private const float SLOWTIME = 0.4f;
 		public const float TIMELIMIT = 5.0f;		// TIMELIMIT is the maximum time that time can be slowed, in seconds
 		private const float REGENRATE = 0.05f;		// timeRegen is how much timePool is regenerated per tick
 		private const float COOLDOWNRATE = 5.0f;
