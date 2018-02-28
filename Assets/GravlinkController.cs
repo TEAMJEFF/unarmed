@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class GravlinkController : MonoBehaviour {
 
-	public const float MAXHOOKDISTANCE = 15.0f;
+	public const float MAXHOOKDISTANCE = 20.0f;
 
 	public GameObject anchor;
 	public LayerMask cullingmask;
@@ -17,6 +17,8 @@ public class GravlinkController : MonoBehaviour {
 	private HingeJoint joint;
 	private HingeJoint anchorJoint;
 	private LineRenderer lr;
+
+	private float hookLength;
 
 	RaycastHit hit;
 
@@ -34,14 +36,41 @@ public class GravlinkController : MonoBehaviour {
 		// If Left Click
 		if (Input.GetMouseButtonDown (0)) {
 
-			Debug.Log ("MouseDown");
+			FindHitLoc ();
+		} else if (Input.GetMouseButtonUp(0)) {
+			if (isHooked) {
+				isHooked = false;
+				lr.enabled = false;
+				Destroy (joint);
+				Destroy (anchorJoint);
 
-			Ray ray = Camera.main.ScreenPointToRay (Input.mousePosition);
-			if (Physics.Raycast(ray, out hit, MAXHOOKDISTANCE, cullingmask)) {
+				hookLength = 0;
+				rb.useGravity = true;
+				
+			} else if (isHooking) {
+				isHooking = false;
+				lr.enabled = false;
+				Destroy (joint);
+				Destroy (anchorJoint);
+			}
+		}
 
+		if (isHooked) {
+			Swinging ();
+		} else if (isHooking) {
+			Pulling ();
+		}
+	}
+
+	public void FindHitLoc() {
+
+		Ray ray = Camera.main.ScreenPointToRay (Input.mousePosition);
+		if (Physics.Raycast(ray, out hit, MAXHOOKDISTANCE, cullingmask)) {
+
+			if (hit.point.z > transform.position.z) {
 				Debug.Log ("Hit");
 
-				isHooked = true;
+				hookLength = Vector3.Distance (rb.position, hit.point);
 
 				// Move anchor to hitloc and attach a HingeJoint to it
 				anchor.transform.position = hit.point;
@@ -54,19 +83,28 @@ public class GravlinkController : MonoBehaviour {
 				joint = gameObject.AddComponent<HingeJoint> ();
 				joint.axis = Vector3.back;
 				joint.anchor = Vector3.zero;
-				joint.connectedBody = anchor.GetComponent<Rigidbody>();
+				joint.connectedBody = anchor.GetComponent<Rigidbody> ();
 
 				// Show line
+				lr.SetPosition(0, hand.position);
+				lr.SetPosition (1, anchor.transform.position);
 				lr.enabled = true;
-			}
-		} else if (isHooked && Input.GetMouseButtonUp (0)) {
-			Destroy (joint);
-			Destroy (anchorJoint);
-			lr.enabled = false;
-		}
 
-		lr.SetPosition (0, hand.transform.position);
-		lr.SetPosition (1, anchor.transform.position);
+				// Check isHooked, isHooking
+				if (hit.transform.gameObject.layer == LayerMask.NameToLayer("Unanchored")) {
+					isHooking = true;
+				} else {
+					isHooked = true;
+				}
+			}
+		}
+	}
+
+	public void Swinging() {
+
+	}
+
+	public void Pulling() {
 
 	}
 }
