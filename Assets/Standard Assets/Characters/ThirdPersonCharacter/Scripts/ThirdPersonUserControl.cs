@@ -17,16 +17,13 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 		private const float SLOWTIME = 0.4f;
 		public const float TIMELIMIT = 5.0f;		// TIMELIMIT is the maximum time that time can be slowed, in seconds
 		private const float REGENRATE = 0.05f;		// timeRegen is how much timePool is regenerated per tick
-		private const float COOLDOWNRATE = 2.0f;
+		private const float COOLDOWNRATE = 5.0f;
 
 		private bool isSlowed = false;
-		private bool inCooldown = false;
+		public bool inCooldown = false;
         
 		public float timePool = TIMELIMIT;			// timePool is how much time the player can currently slow down for
 		public float cooldownTimer;
-
-		private float slowTime;
-		private float cooldownTime;
 
         private void Start()
         {
@@ -69,8 +66,6 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 			// When LSHIFT is pressed:
 			if (Input.GetKey(KeyCode.LeftShift)) {
 
-				Debug.Log ("timePool: " + timePool.ToString ());
-
 				// Check if timePool has time remaining in it and isn't in cooldown lock
 				if (timePool > 0 && !inCooldown) {
 
@@ -79,7 +74,7 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 					timePool -= (Time.deltaTime * (1/SLOWTIME));
 					isSlowed = true;
 					
-				} else if (timePool > 0 && inCooldown) {
+				} else if (timePool >= 0 && inCooldown) {
 
 					// if timePool has time but player is in cooldown lock
 					if (timePool < TIMELIMIT) {
@@ -88,6 +83,7 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 							timePool = TIMELIMIT;
 						}
 					}
+
 					// TODO: Flash UI
 
 				} else if (timePool <= 0) {
@@ -120,8 +116,8 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 			// In cooldown lock but not pressing LSHIFT
 			if (inCooldown) 
 			{
-				cooldownTime -= Time.deltaTime;
-				if (cooldownTime <= 0) {
+				cooldownTimer -= Time.deltaTime;
+				if (cooldownTimer <= 0) {
 					inCooldown = false;
 				}
 			}
