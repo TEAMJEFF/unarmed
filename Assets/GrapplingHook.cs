@@ -93,7 +93,7 @@ public class GrapplingHook : MonoBehaviour
 
                 LR.enabled = true;
                 LR.SetPosition(1, target);
-                if (hit.transform.gameObject.layer == LayerMask.NameToLayer("Unanchored"))
+                if (hit.transform.gameObject.layer == LayerMask.NameToLayer("Unanchored") || hit.transform.gameObject.layer == LayerMask.NameToLayer("Lever"))
                 {
                     unitHit = hit.transform.gameObject;
                     IsHooking = true;
@@ -148,7 +148,14 @@ public class GrapplingHook : MonoBehaviour
 		if (targetDistance < hookLength) {
 
 			if (Input.GetAxis ("Mouse Y") < downMouseThreshold) {
-				unitHit.transform.position = Vector3.MoveTowards (unitHit.transform.position, hand.position, (speed * Time.deltaTime));
+				if(unitHit.layer == LayerMask.NameToLayer("Unanchored")) 
+				{
+					unitHit.transform.position = Vector3.MoveTowards (unitHit.transform.position, hand.position, (speed * Time.deltaTime));
+				}
+				else if (unitHit.layer == LayerMask.NameToLayer("Lever"))
+				{
+					unitHit.transform.SendMessage("PulledDown");
+				}
 			}
 
 			LR.SetPosition (0, hand.position);
