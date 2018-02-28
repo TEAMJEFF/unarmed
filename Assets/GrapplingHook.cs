@@ -69,11 +69,11 @@ public class GrapplingHook : MonoBehaviour
 	{
 
 		Plane playerPlane = new Plane(Vector3.up, transform.position);
-		//Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+		Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
 		Debug.Log ("Cast");
 
-		if (Physics.Raycast(rb.transform.position, Input.mousePosition, MAXHOOKDISTANCE, cullingmask))
+		if (Physics.Raycast(ray, out hit, MAXHOOKDISTANCE, cullingmask))
 		{
 			Debug.Log ("Hit");
 			//Vector3 targetPoint = ray.GetPoint(hitdist);
