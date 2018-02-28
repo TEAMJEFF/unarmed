@@ -93,6 +93,18 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 
 				bool crouch = Input.GetKey (KeyCode.C);
 
+<<<<<<< HEAD
+=======
+			// If key hit and already not slowed down and not in cool down
+			if (Input.GetKeyDown (KeyCode.LeftShift) && !isSlowed && !slowCooldown) 
+			{
+				Debug.Log ("KEY PRESSED");
+				// Do something
+				isSlowed = true;
+				slowCooldown = true;
+				slowTime = 5f;
+				cooldownTime = 5f;
+>>>>>>> master
 
 				// I think this shit works
 				// Pretty sure it works correctly
@@ -115,7 +127,16 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 					slowTime = 5f;
 					cooldownTime = 5f;
 
+<<<<<<< HEAD
 				}
+=======
+			// If key released and cool down is true
+			if (Input.GetKeyUp (KeyCode.LeftShift) && slowCooldown) 
+			{
+				Debug.Log ("KEY RELEASED");
+				isSlowed = false;
+			}
+>>>>>>> master
 
 				// If key released and cool down is true
 				if (Input.GetKeyUp (KeyCode.E) && slowCooldown) {
@@ -174,6 +195,32 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 				m_Character.Move (m_Move, crouch, m_Jump);
 				m_Jump = false;
 			}
+<<<<<<< HEAD
 		}
+=======
+					
+
+            // calculate move direction to pass to character
+            if (m_Cam != null)
+            {
+                // calculate camera relative direction to move:
+                m_CamForward = Vector3.Scale(m_Cam.forward, new Vector3(1, 0, 1)).normalized;
+                m_Move = v*m_CamForward + h*m_Cam.right;
+            }
+            else
+            {
+                // we use world-relative directions in the case of no main camera
+                m_Move = v*Vector3.forward + h*Vector3.right;
+            }
+#if !MOBILE_INPUT
+			// walk speed multiplier
+	        // if (Input.GetKey(KeyCode.LeftShift)) m_Move *= 0.5f;
+#endif
+
+            // pass all parameters to the character control script
+            m_Character.Move(m_Move, crouch, m_Jump);
+            m_Jump = false;
+        }
+>>>>>>> master
     }
 }

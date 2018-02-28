@@ -5,8 +5,14 @@ using UnityEngine.SceneManagement;
 
 public class Restarter : MonoBehaviour
 {
+	void Start()
+	{
+		gameObject.
+	}
+
 	void OnCollisionEnter(Collision collision)
 	{
 		SceneManager.LoadScene (SceneManager.GetActiveScene ().name);
+
 	}
 }
