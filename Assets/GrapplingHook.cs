@@ -38,29 +38,30 @@ public class GrapplingHook : MonoBehaviour
 	// Update is called once per frame
 	void Update()
 	{
-		if (Input.GetButtonDown("Fire1"))
-			Findspot();
+		if (cam.enabled) {
+			if (Input.GetButtonDown ("Fire1"))
+				Findspot ();
 
-		if (IsHooked)
-			Hooking();
+			if (IsHooked)
+				Hooking ();
 
-		if (IsHooking)
-			Pulling();
+			if (IsHooking)
+				Pulling ();
 
-		if (Input.GetButtonUp("Fire1"))
-		{
-			if (IsHooked) {
-				IsHooked = false;
-				hookLength = 0;
-				//FPC.CanMove = true;
-				LR.enabled = false;
-				rb.useGravity = true;
-				FPC.m_GravityMultiplier = 2f;
+			if (Input.GetButtonUp ("Fire1")) {
+				if (IsHooked) {
+					IsHooked = false;
+					hookLength = 0;
+					//FPC.CanMove = true;
+					LR.enabled = false;
+					rb.useGravity = true;
+					FPC.m_GravityMultiplier = 2f;
 
-			} else if (IsHooking) {
+				} else if (IsHooking) {
 
-				IsHooking = false;
-				LR.enabled = false;
+					IsHooking = false;
+					LR.enabled = false;
+				}
 			}
 		}
 	}
