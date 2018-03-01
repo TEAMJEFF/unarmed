@@ -58,7 +58,7 @@ public class GrapplingHook : MonoBehaviour
 				FPC.m_GravityMultiplier = 2f;
 
 			} else if (IsHooking) {
-				
+
 				IsHooking = false;
 				LR.enabled = false;
 			}
@@ -76,7 +76,7 @@ public class GrapplingHook : MonoBehaviour
         //Debug.DrawRay(rayOrgin, guess);
 
         Plane playerPlane = new Plane(Vector3.up, transform.position);
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        Ray ray = cam.ScreenPointToRay(Input.mousePosition);
 
         //float hitdist = 0.0f;
         //if (playerPlane.Raycast(ray, out hitdist))
@@ -100,7 +100,7 @@ public class GrapplingHook : MonoBehaviour
                 }
                 else
                 {
-                    IsHooked = true;            
+                    IsHooked = true;
                 }
             }
         }
@@ -110,7 +110,7 @@ public class GrapplingHook : MonoBehaviour
     {
         // rb.useGravity = false;
         FPC.m_GravityMultiplier = 0.1f;
-        
+
 		float targetDistance = Vector3.Distance (transform.position, target);
 
 		Debug.Log ("Distance: " + targetDistance.ToString() + ", hookLength: " + hookLength.ToString() + "MAXHOOKDISTANCE: " + MAXHOOKDISTANCE.ToString());
@@ -142,7 +142,7 @@ public class GrapplingHook : MonoBehaviour
         //unitHit.transform.position = Vector3.Lerp(target, transform.position, speed * Time.deltaTime / Vector3.Distance(target, transform.position));
         Vector3 direction = unitHit.transform.position - transform.position;
         //unitHit.GetComponent().AddForce(10f * direction);
-        
+
 		float targetDistance = Vector3.Distance (transform.position, target);
 
 		if (targetDistance < hookLength) {
@@ -153,9 +153,9 @@ public class GrapplingHook : MonoBehaviour
 
 			LR.SetPosition (0, hand.position);
 			LR.SetPosition (1, unitHit.transform.position);
-        
+
 		} else {
-			
+
             IsHooking = false;
             LR.enabled = false;
         }
