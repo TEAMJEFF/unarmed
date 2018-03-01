@@ -10,7 +10,7 @@ public class PressurePlate : MonoBehaviour {
 	// Use this for initialization
 	void Start () 
 	{
-		activated = this.gameObject.transform.GetChild (0).gameObject;
+		//activated = this.gameObject.transform.GetChild (0).gameObject;
 		//psys = GetComponent<ParticleSystem> ();
 
 	}
