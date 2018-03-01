@@ -11,7 +11,7 @@ public class GrapplingHook : MonoBehaviour
 	private Rigidbody rb;
 
 	public LayerMask cullingmask;
-	public const float MAXHOOKDISTANCE = 15.0f;
+	public const float MAXHOOKDISTANCE = 20.0f;
 
 	public bool IsHooked;
 	public bool IsHooking;
