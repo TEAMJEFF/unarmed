@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityStandardAssets.CrossPlatformInput;
 
 namespace UnityStandardAssets.Characters.ThirdPerson
@@ -20,9 +21,14 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 		private const float COOLDOWNRATE = 5.0f;
 
 		private bool isSlowed = false;
+
+		public Slider timeSlider;
+		public Image fill;
+		public Image cooldownImage;
+		public float flashSpeed = 10;
+		public Color flashColor = new Color(1f, 0.92f, 0.016f, 0.1f);	// yellow khaki
 		public bool inCooldown = false;
-        
-		public float timePool = TIMELIMIT;			// timePool is how much time the player can currently slow down for
+        public float timePool = TIMELIMIT;			// timePool is how much time the player can currently slow down for
 		public float cooldownTimer;
 
         private void Start()
@@ -41,6 +47,8 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 
             // get the third person character ( this should never be null due to require component )
             m_Character = GetComponent<ThirdPersonCharacter>();
+
+			timeSlider.maxValue = TIMELIMIT;
         }
 
 
@@ -50,6 +58,10 @@ namespace UnityStandardAssets.Characters.ThirdPerson
             {
                 m_Jump = CrossPlatformInputManager.GetButtonDown("Jump");
             }
+
+			if (inCooldown) {
+				cooldownImage.color = Color.Lerp (cooldownImage.color, Color.clear, flashSpeed * Time.deltaTime);
+			}
         }
 			
 
@@ -72,6 +84,7 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 					// if so, slow time and reduce the pool
 					Time.timeScale = SLOWTIME;
 					timePool -= (Time.deltaTime * (1/SLOWTIME));
+					timeSlider.value = timePool;
 					isSlowed = true;
 					
 				} else if (timePool >= 0 && inCooldown) {
@@ -82,6 +95,7 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 						if (timePool > TIMELIMIT) {
 							timePool = TIMELIMIT;
 						}
+						timeSlider.value = timePool;
 					}
 
 					// TODO: Flash UI
@@ -96,8 +110,19 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 
 					// Normalize to zero, start cooldown timer
 					timePool = 0;
+					timeSlider.value = timePool;
 					inCooldown = true;
 					cooldownTimer = COOLDOWNRATE;
+					Color originalColor = fill.color;
+
+					// Flash the timeSlider
+					for (int i = 0; i < 4; ++i) {
+						fill.color = originalColor;
+						fill.color = Color.grey;
+					}
+
+					// Flash the UI
+//					cooldownImage.color = flashColor;
 				}
 			} else {
 
@@ -109,6 +134,7 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 					if (timePool > TIMELIMIT) {
 						timePool = TIMELIMIT;
 					}
+					timeSlider.value = timePool;
 				}
 
 			}
@@ -119,6 +145,7 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 				cooldownTimer -= Time.deltaTime;
 				if (cooldownTimer <= 0) {
 					inCooldown = false;
+					fill.color = new Color32 (0x70, 0x71, 0xFF, 0xFF);
 				}
 			}
 					
