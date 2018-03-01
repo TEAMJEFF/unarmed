@@ -13,12 +13,24 @@ public class collissionRestart : MonoBehaviour {
 
     void OnCollisionEnter(Collision collision)
     {
-        madeContact = true;
-        timeAtContact = Time.unscaledTime;
-        timeAtReset = timeAtContact + resetTime;
+        if(collision.gameObject.name == "Demo Cube")
+        {
+            madeContact = true;
+            timeAtContact = Time.unscaledTime;
+            timeAtReset = timeAtContact + resetTime;
+        }
+
         //Debug.Log(collision.gameObject);
         //Debug.Log(collision.relativeVelocity);
         //Debug.Log("HIT The object");
+    }
+
+    void OnCollisionExit(Collision collision)
+    {
+        if(collision.gameObject.name == "Demo Cube")
+        {
+            madeContact = false;
+        }
     }
 
     void Update()
