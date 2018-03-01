@@ -14,7 +14,7 @@ public class PausingScript : MonoBehaviour {
 	// Use this for initialization
 	void Start () 
 	{
-        unit = player.GetComponent("GrapplingHook") as MonoBehaviour;
+        //unit = player.GetComponent("GrapplingHook") as MonoBehaviour;
 		mainCam.GetComponent<Camera> ();
 		mainCam.enabled = true;
 		pauseCam.enabled = false;
@@ -32,7 +32,7 @@ public class PausingScript : MonoBehaviour {
                 //				mainCam.enabled = false;
                 //				pauseCam.enabled = true;
                 //MonoBehaviour unit = (GetComponent("GrapplingHook") as MonoBehaviour);
-                unit.enabled = false;
+                //unit.enabled = false;
 				pause();
 			} else {
                 //				Debug.Log ("UNPAUSED");
@@ -40,7 +40,7 @@ public class PausingScript : MonoBehaviour {
                 //				Time.timeScale = 1f;
                 //				mainCam.enabled = true;
                 //				pauseCam.enabled = false;
-                unit.enabled = true;
+                //unit.enabled = true;
 				unPause();
 			}
 		}
