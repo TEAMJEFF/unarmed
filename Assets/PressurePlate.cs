@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class switchMechanic : MonoBehaviour {
+public class PressurePlate : MonoBehaviour {
 
 	public GameObject activated;
 	private ParticleSystem psys;
