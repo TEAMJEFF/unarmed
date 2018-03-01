@@ -11,7 +11,7 @@ public class GrapplingHook : MonoBehaviour
 	private Rigidbody rb;
 
 	public LayerMask cullingmask;
-	public const float MAXHOOKDISTANCE = 15.0f;
+	public const float MAXHOOKDISTANCE = 20.0f;
 
 	public bool IsHooked;
 	public bool IsHooking;
@@ -38,29 +38,30 @@ public class GrapplingHook : MonoBehaviour
 	// Update is called once per frame
 	void Update()
 	{
-		if (Input.GetButtonDown("Fire1"))
-			Findspot();
+		if (cam.enabled) {
+			if (Input.GetButtonDown ("Fire1"))
+				Findspot ();
 
-		if (IsHooked)
-			Hooking();
+			if (IsHooked)
+				Hooking ();
 
-		if (IsHooking)
-			Pulling();
+			if (IsHooking)
+				Pulling ();
 
-		if (Input.GetButtonUp("Fire1"))
-		{
-			if (IsHooked) {
-				IsHooked = false;
-				hookLength = 0;
-				//FPC.CanMove = true;
-				LR.enabled = false;
-				rb.useGravity = true;
-				FPC.m_GravityMultiplier = 2f;
+			if (Input.GetButtonUp ("Fire1")) {
+				if (IsHooked) {
+					IsHooked = false;
+					hookLength = 0;
+					//FPC.CanMove = true;
+					LR.enabled = false;
+					rb.useGravity = true;
+					FPC.m_GravityMultiplier = 2f;
 
-			} else if (IsHooking) {
+				} else if (IsHooking) {
 
-				IsHooking = false;
-				LR.enabled = false;
+					IsHooking = false;
+					LR.enabled = false;
+				}
 			}
 		}
 	}
@@ -69,7 +70,7 @@ public class GrapplingHook : MonoBehaviour
 	{
 
 		Plane playerPlane = new Plane(Vector3.up, transform.position);
-		Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+		Ray ray = cam.ScreenPointToRay(Input.mousePosition);
 
 		Debug.Log ("Cast");
 
