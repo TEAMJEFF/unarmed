@@ -11,8 +11,8 @@ PlayerSettings:
   targetDevice: 2
   useOnDemandResources: 0
   accelerometerFrequency: 60
-  companyName: DefaultCompany
-  productName: 2.5D Proto
+  companyName: TEAM JEFF
+  productName: Project Gravlink
   defaultCursor: {fileID: 0}
   cursorHotspot: {x: 0, y: 0}
   m_SplashScreenBackgroundColor: {r: 0.13725491, g: 0.12156863, b: 0.1254902, a: 1}
@@ -650,9 +650,9 @@ PlayerSettings:
     UNet: 1
   facebookSdkVersion: 7.9.4
   apiCompatibilityLevel: 2
-  cloudProjectId: 8ab26e17-6f9d-4e60-8ec0-886d76f2d26e
-  projectName: 2.5D Proto
-  organizationId: wieliczk
+  cloudProjectId: 41d28a59-1f89-4391-81a2-3f0e447a7e99
+  projectName: Project Gravlink
+  organizationId: gojeffcho
   cloudEnabled: 0
   enableNativePlatformBackendsForNewInputSystem: 0
   disableOldInputManagerSupport: 0
