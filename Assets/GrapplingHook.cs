@@ -24,6 +24,10 @@ public class GrapplingHook : MonoBehaviour
 	public float speed = 25;
 	public Transform hand;
 
+	private Vector3 lastVelocity;
+	private Vector3 acceleration;
+	private Vector3 nextPosition;
+
 	public ThirdPersonCharacter FPC;
 	public LineRenderer LR;
 
@@ -105,11 +109,29 @@ public class GrapplingHook : MonoBehaviour
 		FPC.m_GravityMultiplier = 0.1f;
 		float targetDistance = Vector3.Distance (transform.position, target);
 
-		Debug.Log ("Distance: " + targetDistance.ToString() + ", hookLength: " + hookLength.ToString() + "MAXHOOKDISTANCE: " + MAXHOOKDISTANCE.ToString());
+//		Debug.Log ("Distance: " + targetDistance.ToString() + ", hookLength: " + hookLength.ToString() + "MAXHOOKDISTANCE: " + MAXHOOKDISTANCE.ToString());
 
 		if (targetDistance < hookLength) {
 
 			LR.SetPosition (0, hand.position);
+
+			Debug.Log ("Accel: " + acceleration.magnitude.ToString() + " LastVelo: " + lastVelocity.magnitude.ToString() + " Velo: " + rb.velocity.magnitude.ToString());
+
+			acceleration = (rb.velocity - lastVelocity) / Time.deltaTime;
+			if (acceleration.magnitude > 10.0f) {
+				acceleration = Vector3.zero;
+			}
+			rb.velocity = rb.velocity + acceleration * Time.deltaTime;
+			//			nextPosition = rb.position + rb.velocity * Time.deltaTime;
+			lastVelocity = rb.velocity;
+
+			//			Debug.Log ("nextPosition: " + nextPosition.ToString ());
+			//
+			//			if (Vector3.Distance (nextPosition, target) > hookLength - 0.25f) {
+			//				Vector3 deltaVector = (nextPosition - target).normalized * hookLength;
+			//				nextPosition = nextPosition + deltaVector;
+			//				Debug.Log ("Corrected nextPosition: " + nextPosition.ToString ());
+			//			}
 
 			//if (Input.GetAxis ("Mouse X") < 0 || Input.GetAxis("Mouse X") > 0 || Input.GetAxis("Mouse Y") < 0 || Input.GetAxis("Mouse Y") > 0) {
 
