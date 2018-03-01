@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class switchMechanic : MonoBehaviour {
+public class PressurePlate : MonoBehaviour {
 
 	public GameObject activated;
 	private ParticleSystem psys;
@@ -10,7 +10,7 @@ public class switchMechanic : MonoBehaviour {
 	// Use this for initialization
 	void Start () 
 	{
-		activated = this.gameObject.transform.GetChild (0).gameObject;
+		//activated = this.gameObject.transform.GetChild (0).gameObject;
 		//psys = GetComponent<ParticleSystem> ();
 
 	}
