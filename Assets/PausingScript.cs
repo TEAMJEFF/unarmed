@@ -1,12 +1,15 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PausingScript : MonoBehaviour {
 
 	[SerializeField] GameObject player;
 	[SerializeField] Camera mainCam;
 	[SerializeField] Camera pauseCam;
+
+	public CanvasGroup UICanvas;
 	public bool isPaused = false;
 	MonoBehaviour unit;
 
@@ -18,6 +21,7 @@ public class PausingScript : MonoBehaviour {
 		mainCam.GetComponent<Camera> ();
 		mainCam.enabled = true;
 		pauseCam.enabled = false;
+
 	}
 
 	// Update is called once per frame
@@ -54,6 +58,9 @@ public class PausingScript : MonoBehaviour {
 	{
 		Debug.Log ("UNPAUSED");
 		isPaused = false;
+		UICanvas.blocksRaycasts = false;
+		UICanvas.interactable = false;
+
 		Time.timeScale = 1f;
 		mainCam.enabled = true;
 		pauseCam.enabled = false;
@@ -63,6 +70,9 @@ public class PausingScript : MonoBehaviour {
 	{
 		Debug.Log ("NOW PAUSED");
 		isPaused = true;
+		UICanvas.blocksRaycasts = true;
+		UICanvas.interactable = true;
+
 		Time.timeScale = 0f;
 		mainCam.enabled = false;
 		pauseCam.enabled = true;
