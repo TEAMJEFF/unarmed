@@ -69,7 +69,7 @@ public class GrapplingHook : MonoBehaviour
 	public void Findspot()
 	{
 
-		Plane playerPlane = new Plane(Vector3.up, transform.position);
+//		Plane playerPlane = new Plane(Vector3.up, transform.position);
 		Ray ray = cam.ScreenPointToRay(Input.mousePosition);
 
 		Debug.Log ("Cast");
@@ -132,7 +132,7 @@ public class GrapplingHook : MonoBehaviour
 	public void Pulling()
 	{
 		//unitHit.transform.position = Vector3.Lerp(target, transform.position, speed * Time.deltaTime / Vector3.Distance(target, transform.position));
-		Vector3 direction = unitHit.transform.position - transform.position;
+//		Vector3 direction = unitHit.transform.position - transform.position;
 		//unitHit.GetComponent().AddForce(10f * direction);
 
 		float targetDistance = Vector3.Distance (transform.position, target);
