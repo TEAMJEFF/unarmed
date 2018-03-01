@@ -16,7 +16,7 @@ public class ExitGame : MonoBehaviour {
 	
 	void ifClicked()
 	{
-		//Debug.Log ("Clicked");
+		Debug.Log ("Clicked");
 		Application.Quit();
 	}
 }
