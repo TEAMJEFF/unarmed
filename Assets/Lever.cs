@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class Lever : MonoBehaviour {
 
-	public GameObject LeftWall;
-	public GameObject RightWall;
+	public GameObject wall;
+    public GameObject cam;
 
 	public bool leverPulled = false;
 
@@ -17,15 +17,14 @@ public class Lever : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		if (leverPulled) {
-			LeftWall = GameObject.Find("Left Wall");
-			RightWall = GameObject.Find("Right Wall");
-
-			LeftWall.transform.position = Vector3.MoveTowards(LeftWall.transform.position, transform.position, (3.0f * Time.deltaTime));
-			RightWall.transform.position = Vector3.MoveTowards(RightWall.transform.position, transform.position, (3.0f * Time.deltaTime));
+            
 		}
 	}
 
 	void PulledDown() {
 		leverPulled = true;
-	}
+        //GetComponent<CameraShake>().enabled = true;
+        //cam.GetComponent<ThirdPersonCamera>().enabled = false;
+        //cam.GetComponent<Rigidbody>().AddExplosionForce(500f, transform.position, 1f, 100f);
+    }
 }

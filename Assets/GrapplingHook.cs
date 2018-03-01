@@ -85,7 +85,7 @@ public class GrapplingHook : MonoBehaviour
 				Debug.Log ("hookLength: " + hookLength.ToString ());
 				LR.enabled = true;
 				LR.SetPosition(1, target);
-				if (hit.transform.gameObject.layer == LayerMask.NameToLayer("Unanchored"))
+				if (hit.transform.gameObject.layer == LayerMask.NameToLayer("Unanchored") || hit.transform.gameObject.layer == LayerMask.NameToLayer("Lever"))
 				{
 					unitHit = hit.transform.gameObject;
 					IsHooking = true;
@@ -145,7 +145,8 @@ public class GrapplingHook : MonoBehaviour
 				}
 				else if (unitHit.layer == LayerMask.NameToLayer("Lever"))
 				{
-					unitHit.transform.SendMessage("PulledDown");
+                    //unitHit.transform.SendMessage("PulledDown"); // to do something later for now its time to have fun
+                    rb.AddExplosionForce(200f, transform.position, 1f, 100f);
 				}
 			}
 
