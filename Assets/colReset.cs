@@ -49,7 +49,7 @@ public class colReset : MonoBehaviour
 
 	void OnCollisionExit(Collision col)
 	{
-		if (col.gameObject.layer == 0) 
+		if (col.gameObject.tag == "resetCollision") 
 		{
 			isHit = false;
 		}

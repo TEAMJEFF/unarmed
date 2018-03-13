@@ -5,7 +5,7 @@ using System.Collections;
 using UnityEngine.SceneManagement;
 
 // HOW TO USE SCREEN FADE
-// Create (or Duplicate) a HUDcanvas same as one used for slow time
+// Duplicate Fill from HUDcanvas and keep it in the canvas 
 // Delete everything in it except fill image
 // Change fill image name to fade and make color black 
 // It works...? 
