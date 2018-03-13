@@ -4,6 +4,12 @@ using UnityEngine.UI;
 using System.Collections;
 using UnityEngine.SceneManagement;
 
+// HOW TO USE SCREEN FADE
+// Create (or Duplicate) a HUDcanvas same as one used for slow time
+// Delete everything in it except fill image
+// Change fill image name to fade and make color black 
+// It works...? 
+
 public class ScreenFader : MonoBehaviour
 {
     public Image FadeImg;
@@ -11,13 +17,16 @@ public class ScreenFader : MonoBehaviour
     public bool sceneStarting = true;
 
 
+
     void Awake()
     {
-        FadeImg.rectTransform.localScale = new Vector2(Screen.width, Screen.height);
-        FadeImg.enabled = true;
+		if (FadeImg != null) 
+		{
+			FadeImg.rectTransform.localScale = new Vector2 (Screen.width, Screen.height);
+			FadeImg.enabled = true;
+		}
     }
-
-    //void OnStart()
+		
 
     void Update()
     {
@@ -38,7 +47,7 @@ public class ScreenFader : MonoBehaviour
     void FadeToBlack()
     {
 
-        Debug.Log("THIS HAPPENS");
+        //Debug.Log("THIS HAPPENS");
         // Lerp the colour of the image between itself and black.
         FadeImg.color = Color.Lerp(FadeImg.color, Color.black, fadeSpeed * Time.deltaTime);
     }
