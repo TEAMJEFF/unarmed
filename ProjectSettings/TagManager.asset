@@ -15,9 +15,9 @@ TagManager:
   - 
   - 
   - Player
-  - NonGrappleable
+  - Anchored
   - Unanchored
-  - Lever
+  - 
   - 
   - 
   - 
