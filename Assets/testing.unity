@@ -217,8 +217,8 @@ GameObject:
   - component: {fileID: 139193772}
   - component: {fileID: 139193776}
   - component: {fileID: 139193771}
-  m_Layer: 11
-  m_Name: Handle
+  m_Layer: 9
+  m_Name: Lever Handle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -260,8 +260,8 @@ HingeJoint:
     freeSpin: 0
   m_UseLimits: 1
   m_Limits:
-    min: -35
-    max: 0
+    min: 0
+    max: 35
     bounciness: 0
     bounceMinVelocity: 0.2
     contactDistance: 0
@@ -1218,7 +1218,7 @@ GameObject:
   - component: {fileID: 1332909189}
   - component: {fileID: 1332909188}
   - component: {fileID: 1332909187}
-  m_Layer: 11
+  m_Layer: 9
   m_Name: Sliding Door Lever
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1339,6 +1339,7 @@ GameObject:
   - component: {fileID: 1357958826}
   - component: {fileID: 1357958825}
   - component: {fileID: 1357958824}
+  - component: {fileID: 1357958831}
   - component: {fileID: 1357958823}
   m_Layer: 8
   m_Name: ThirdPersonController
@@ -1383,7 +1384,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1357958821}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6f73e53dd4994674bbb8cb5fef7940c1, type: 3}
   m_Name: 
@@ -1577,6 +1578,31 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
+--- !u!114 &1357958831
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1357958821}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ce324e6ac6b154b8e9683db58a1060ce, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cam: {fileID: 2008969415}
+  cullingmask:
+    serializedVersion: 2
+    m_Bits: 1536
+  IsRepelled: 0
+  IsRepelling: 0
+  target: {x: 0, y: 0, z: 0}
+  unitHit: {fileID: 0}
+  hand: {fileID: 0}
+  FPC: {fileID: 0}
+  LR: {fileID: 0}
+  force: 100
+  radius: 100
+  upModifier: 0.25
 --- !u!1 &1408744978
 GameObject:
   m_ObjectHideFlags: 0
@@ -1951,7 +1977,7 @@ GameObject:
   - component: {fileID: 1740489370}
   - component: {fileID: 1740489369}
   - component: {fileID: 1740489368}
-  m_Layer: 11
+  m_Layer: 9
   m_Name: Platform Lever
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2070,8 +2096,8 @@ GameObject:
   - component: {fileID: 1776356672}
   - component: {fileID: 1776356671}
   - component: {fileID: 1776356670}
-  m_Layer: 11
-  m_Name: Handle
+  m_Layer: 9
+  m_Name: Lever Handle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2113,8 +2139,8 @@ HingeJoint:
     freeSpin: 0
   m_UseLimits: 1
   m_Limits:
-    min: -35
-    max: 0
+    min: 0
+    max: 35
     bounciness: 0
     bounceMinVelocity: 0.2
     contactDistance: 0

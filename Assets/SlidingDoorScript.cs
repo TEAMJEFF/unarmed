@@ -33,7 +33,7 @@ public class SlidingDoorScript : MonoBehaviour
     void PulledDown()
     {
         leverPulled = true;
-        handle.GetComponent<Rigidbody>().AddForce(0, 0, -20f);
+        handle.GetComponent<Rigidbody>().AddForce(0, 0, 20f);
         //GetComponent<CameraShake>().enabled = true;
         //cam.GetComponent<ThirdPersonCamera>().enabled = false;
         //cam.GetComponent<Rigidbody>().AddExplosionForce(500f, transform.position, 1f, 100f);

@@ -24,7 +24,7 @@ public class Lever : MonoBehaviour {
 
 	void PulledDown() {
 		leverPulled = true;
-        handle.GetComponent<Rigidbody>().AddForce(0, 0, -20f);
+        handle.GetComponent<Rigidbody>().AddForce(0, 0, 20f);
         
         //GetComponent<CameraShake>().enabled = true;
         //cam.GetComponent<ThirdPersonCamera>().enabled = false;
