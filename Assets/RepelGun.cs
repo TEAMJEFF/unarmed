@@ -70,10 +70,19 @@ public class RepelGun : MonoBehaviour {
 					Debug.Log ("Not Unanchored");
 
 					Vector3 direction = -transform.forward * force;
-					rb.AddExplosionForce(1500f, hit.point, 100f, 0.3f);
-//					rb.AddForce (direction, ForceMode.Impulse);
-					            
-				}
+                    GameObject target = hit.transform.gameObject;
+                    Debug.Log("Name of unanchored " + target.name);
+                    if (target.name.Contains("Lever"))
+                    {
+                        target.SendMessage("PulledDown");
+                    } else
+                    {
+                        rb.AddExplosionForce(1500f, hit.point, 100f, 0.3f);
+                       // rb.AddForce (direction, ForceMode.Impulse);
+                    }
+
+
+                }
 			}
 		}
 	}
