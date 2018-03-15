@@ -78,6 +78,7 @@ public class RepelGun : MonoBehaviour {
                     } else
                     {
                         rb.AddExplosionForce(1500f, hit.point, 100f, 0.3f);
+                       // rb.AddForce (direction, ForceMode.Impulse);
                     }
 
 
