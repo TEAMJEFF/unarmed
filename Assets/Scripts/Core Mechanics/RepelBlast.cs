@@ -43,6 +43,17 @@ public class RepelBlast : MonoBehaviour {
 
 		Ray ray = cam.ScreenPointToRay(Input.mousePosition);
 
+		// Use up time when repelling
+		if (!ThirdPersonUserControl.inCooldown && (ThirdPersonUserControl.timePool -= ThirdPersonUserControl.TIMELIMIT / 2.5f) >= 0) {
+			Debug.Log("Got time for repel");
+			ThirdPersonUserControl.timePool -= ThirdPersonUserControl.TIMELIMIT / 2.5f;
+		} else {
+			Debug.Log ("Flash it biyatch");
+			GameObject thirdPersonUC = GameObject.Find ("ThirdPersonController");
+			StartCoroutine(thirdPersonUC.GetComponent<ThirdPersonUserControl> ().flashTimeBar ());
+			return;
+		}
+
 		Debug.Log ("Fire!");
 
 		if (Physics.Raycast(ray, out hit, MAXFIREDISTANCE, cullingmask))
@@ -54,13 +65,6 @@ public class RepelBlast : MonoBehaviour {
 			{
 //				LR.enabled = true;
 //				LR.SetPosition(1, target);
-
-				// Use up time when repelling
-				if ((ThirdPersonUserControl.timePool -= ThirdPersonUserControl.TIMELIMIT / 2.5f) >= 0) {
-					ThirdPersonUserControl.timePool -= ThirdPersonUserControl.TIMELIMIT / 2.5f;
-				} else {
-					
-				}
 
 				// What did we hit?
 				if (hit.transform.gameObject.layer == LayerMask.NameToLayer ("Unanchored")) {
