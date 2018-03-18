@@ -807,7 +807,6 @@ GameObject:
   - component: {fileID: 1143577833}
   - component: {fileID: 1120784789}
   - component: {fileID: 1143577836}
-  - component: {fileID: 1143577831}
   - component: {fileID: 1143577832}
   m_Layer: 8
   m_Name: ThirdPersonController
@@ -816,30 +815,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1143577831
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1143577830}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6f73e53dd4994674bbb8cb5fef7940c1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  cam: {fileID: 890913717}
-  cullingmask:
-    serializedVersion: 2
-    m_Bits: 3073
-  IsHooked: 0
-  IsHooking: 0
-  target: {x: 0, y: 0, z: 0}
-  unitHit: {fileID: 0}
-  hookLength: 0
-  speed: 25
-  hand: {fileID: 659296972}
-  FPC: {fileID: 1120784789}
-  LR: {fileID: 1143577836}
 --- !u!114 &1143577832
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -848,7 +823,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1143577830}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ce324e6ac6b154b8e9683db58a1060ce, type: 3}
+  m_Script: {fileID: 11500000, guid: 0e8b3dbe930e6405c80d77f7e8cad0fe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   cam: {fileID: 890913717}
@@ -882,9 +857,6 @@ MonoBehaviour:
   cooldownImage: {fileID: 2031443915}
   flashSpeed: 10
   flashColor: {r: 1, g: 0.92, b: 0.016, a: 0.1}
-  inCooldown: 0
-  timePool: 5
-  cooldownTimer: 0
 --- !u!136 &1143577834
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -1527,7 +1499,7 @@ GameObject:
   - component: {fileID: 1910184284}
   - component: {fileID: 1910184283}
   - component: {fileID: 1910184282}
-  m_Layer: 9
+  m_Layer: 0
   m_Name: Terrain
   m_TagString: Untagged
   m_Icon: {fileID: 0}

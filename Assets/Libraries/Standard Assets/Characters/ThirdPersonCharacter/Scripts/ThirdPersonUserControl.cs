@@ -2,6 +2,7 @@ using System;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityStandardAssets.CrossPlatformInput;
+using System.Collections;
 
 namespace UnityStandardAssets.Characters.ThirdPerson
 {
@@ -27,9 +28,13 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 		public Image cooldownImage;
 		public float flashSpeed = 10;
 		public Color flashColor = new Color(1f, 0.92f, 0.016f, 0.1f);	// yellow khaki
-		public bool inCooldown = false;
-        public float timePool = TIMELIMIT;			// timePool is how much time the player can currently slow down for
-		public float cooldownTimer;
+		static public bool inCooldown = false;
+        static public float timePool = TIMELIMIT;			// timePool is how much time the player can currently slow down for
+		static public float cooldownTimer;
+		private bool isFlashing;
+
+		private bool shiftDown;
+		private bool didFlash;
 
         private void Start()
         {
@@ -49,6 +54,9 @@ namespace UnityStandardAssets.Characters.ThirdPerson
             m_Character = GetComponent<ThirdPersonCharacter>();
 
 			timeSlider.maxValue = TIMELIMIT;
+			isFlashing = false;
+			shiftDown = false;
+			didFlash = false;
         }
 
 
@@ -98,31 +106,12 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 						timeSlider.value = timePool;
 					}
 
-					// TODO: Flash UI
+					// Flash UI
+					StartCoroutine(flashTimeBar());
 
 				} else if (timePool <= 0) {
 
-					Debug.Log ("Trigger cooldown");
-
-					// Disable slow-time
-					Time.timeScale = NORMALTIME;
-					isSlowed = false;
-
-					// Normalize to zero, start cooldown timer
-					timePool = 0;
-					timeSlider.value = timePool;
-					inCooldown = true;
-					cooldownTimer = COOLDOWNRATE;
-					Color originalColor = fill.color;
-
-					// Flash the timeSlider
-					for (int i = 0; i < 4; ++i) {
-						fill.color = originalColor;
-						fill.color = Color.grey;
-					}
-
-					// Flash the UI
-//					cooldownImage.color = flashColor;
+					activateCooldown ();
 				}
 			} else {
 
@@ -168,5 +157,45 @@ namespace UnityStandardAssets.Characters.ThirdPerson
             m_Character.Move(m_Move, crouch, m_Jump);
             m_Jump = false;
         }
+
+		public IEnumerator flashTimeBar() {
+
+			if (!isFlashing) {
+				isFlashing = true;
+				for (int i = 0; i < 3; ++i) {
+					Color prevColor = fill.color;
+					fill.color = Color.red;
+					yield return new WaitForSecondsRealtime (0.07f);
+					fill.color = prevColor;
+					yield return new WaitForSecondsRealtime (0.07f);
+				}
+				isFlashing = false;
+				if (inCooldown) {
+					fill.color = Color.grey;
+				}
+			}
+		}
+
+		public void activateCooldown() {
+
+			StartCoroutine(flashTimeBar ());
+
+			// Disable slow-time
+			Time.timeScale = NORMALTIME;
+			isSlowed = false;
+
+			// Normalize to zero, start cooldown timer
+			timePool = 0;
+			timeSlider.value = timePool;
+			inCooldown = true;
+			cooldownTimer = COOLDOWNRATE;
+			Color originalColor = fill.color;
+
+			// Flash the timeSlider
+			for (int i = 0; i < 4; ++i) {
+				fill.color = originalColor;
+				fill.color = Color.grey;
+			}
+		}
     }
 }
