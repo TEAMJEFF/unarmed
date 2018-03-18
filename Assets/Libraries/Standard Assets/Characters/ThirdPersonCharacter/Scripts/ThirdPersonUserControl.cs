@@ -91,6 +91,7 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 
 					// if so, slow time and reduce the pool
 					Time.timeScale = SLOWTIME;
+					Time.fixedDeltaTime = 0.02f * Time.timeScale;
 					timePool -= (Time.deltaTime * (1/SLOWTIME));
 					timeSlider.value = timePool;
 					isSlowed = true;
@@ -118,6 +119,7 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 				// If LSHIFT not down, regen timePool
 				isSlowed = false;
 				Time.timeScale = NORMALTIME;
+				Time.fixedDeltaTime = 0.02f;
 				if (timePool < TIMELIMIT) {
 					timePool += REGENRATE;
 					if (timePool > TIMELIMIT) {
@@ -182,6 +184,7 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 
 			// Disable slow-time
 			Time.timeScale = NORMALTIME;
+			Time.fixedDeltaTime = 0.02f;
 			isSlowed = false;
 
 			// Normalize to zero, start cooldown timer
