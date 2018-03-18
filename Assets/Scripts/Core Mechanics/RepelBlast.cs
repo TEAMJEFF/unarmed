@@ -43,10 +43,31 @@ public class RepelBlast : MonoBehaviour {
 
 		Ray ray = cam.ScreenPointToRay(Input.mousePosition);
 
-		// Use up time when repelling
-		if (!ThirdPersonUserControl.inCooldown && (ThirdPersonUserControl.timePool -= ThirdPersonUserControl.TIMELIMIT / 2.5f) >= 0) {
-			Debug.Log("Got time for repel");
-			ThirdPersonUserControl.timePool -= ThirdPersonUserControl.TIMELIMIT / 2.5f;
+		// Use up time when repelling, if not in cooldown
+		if (!ThirdPersonUserControl.inCooldown) {
+
+			float blastDelta = ThirdPersonUserControl.timePool - ThirdPersonUserControl.TIMELIMIT / 2.5f;
+
+			// Got enough time to blast
+			if (blastDelta > 0) {
+				Debug.Log ("Got time for repel");
+				ThirdPersonUserControl.timePool = blastDelta;
+			
+			// Got just enough time to blast, but will enter cooldown
+			} else if (blastDelta >= -1f) {
+				Debug.Log ("Repel, then cooldown");
+				GameObject thirdPersonUC = GameObject.Find ("ThirdPersonController");
+				thirdPersonUC.GetComponent<ThirdPersonUserControl> ().activateCooldown (); // takes care of timePool
+
+			// Don't got enough time to blast
+			} else {
+				Debug.Log ("Not enough time for blast");
+				GameObject thirdPersonUC = GameObject.Find ("ThirdPersonController");
+				StartCoroutine(thirdPersonUC.GetComponent<ThirdPersonUserControl> ().flashTimeBar ());
+				return;
+			}
+
+		// If in cooldown, flash the timebar
 		} else {
 			Debug.Log ("Flash it biyatch");
 			GameObject thirdPersonUC = GameObject.Find ("ThirdPersonController");
@@ -63,9 +84,6 @@ public class RepelBlast : MonoBehaviour {
 			target = hit.point;
 			if (target.z > transform.position.z - 1)
 			{
-//				LR.enabled = true;
-//				LR.SetPosition(1, target);
-
 				// What did we hit?
 				if (hit.transform.gameObject.layer == LayerMask.NameToLayer ("Unanchored")) {
 

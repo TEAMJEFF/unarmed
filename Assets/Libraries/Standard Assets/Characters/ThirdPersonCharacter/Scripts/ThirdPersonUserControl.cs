@@ -111,29 +111,7 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 
 				} else if (timePool <= 0) {
 
-					Debug.Log ("Trigger cooldown");
-
-					StartCoroutine(flashTimeBar ());
-
-					// Disable slow-time
-					Time.timeScale = NORMALTIME;
-					isSlowed = false;
-
-					// Normalize to zero, start cooldown timer
-					timePool = 0;
-					timeSlider.value = timePool;
-					inCooldown = true;
-					cooldownTimer = COOLDOWNRATE;
-					Color originalColor = fill.color;
-
-					// Flash the timeSlider
-					for (int i = 0; i < 4; ++i) {
-						fill.color = originalColor;
-						fill.color = Color.grey;
-					}
-
-					// Flash the UI
-//					cooldownImage.color = flashColor;
+					activateCooldown ();
 				}
 			} else {
 
@@ -184,9 +162,7 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 
 			if (!isFlashing) {
 				isFlashing = true;
-				Debug.Log ("Flash!");
 				for (int i = 0; i < 3; ++i) {
-					Debug.Log ("\tBlink.");
 					Color prevColor = fill.color;
 					fill.color = Color.red;
 					yield return new WaitForSecondsRealtime (0.07f);
@@ -197,6 +173,28 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 				if (inCooldown) {
 					fill.color = Color.grey;
 				}
+			}
+		}
+
+		public void activateCooldown() {
+
+			StartCoroutine(flashTimeBar ());
+
+			// Disable slow-time
+			Time.timeScale = NORMALTIME;
+			isSlowed = false;
+
+			// Normalize to zero, start cooldown timer
+			timePool = 0;
+			timeSlider.value = timePool;
+			inCooldown = true;
+			cooldownTimer = COOLDOWNRATE;
+			Color originalColor = fill.color;
+
+			// Flash the timeSlider
+			for (int i = 0; i < 4; ++i) {
+				fill.color = originalColor;
+				fill.color = Color.grey;
 			}
 		}
     }
