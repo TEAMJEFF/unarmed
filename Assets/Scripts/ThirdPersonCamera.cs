@@ -13,7 +13,8 @@ public class ThirdPersonCamera : MonoBehaviour {
     private Camera cam;
 
     private RaycastHit hit;
-    public bool attached = false;
+    public float shakeTimer = 3f;
+    public bool shaking = false;
 
     private float distance = 7.0f;
     private float currentX = 0.0f;
@@ -34,6 +35,17 @@ public class ThirdPersonCamera : MonoBehaviour {
 
     private void Update()
     {
+        if(shaking)
+        {
+            shakeTimer -= Time.deltaTime;
+            if (shakeTimer < 0)
+            {
+                shaking = false;
+                cam.GetComponent<CameraShake>().enabled = false;
+                cam.transform.rotation = new Quaternion(0, 0, 0, 0);
+                shakeTimer = 3f;
+            }
+        }
         //currentX += Input.GetAxis("Mouse X");
         //currentY += Input.GetAxis("Mouse Y");
 
@@ -43,9 +55,16 @@ public class ThirdPersonCamera : MonoBehaviour {
     private void LateUpdate()
     {
         Vector3 dir = new Vector3(0, 3, -distance);
-        Quaternion rotation = Quaternion.Euler(currentY, currentX, 0);
+        Quaternion rotation = Quaternion.Euler(0, 0, 0);
         camTransform.position = lookAt.position + rotation * dir;
         camTransform.LookAt(lookAt.position);
+    }
+
+    void Shake()
+    {
+        Debug.Log("Gets here");
+        shaking = true;
+        cam.GetComponent<CameraShake>().enabled = true;
     }
 
 }

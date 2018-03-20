@@ -19,6 +19,7 @@ public class RepelBlast : MonoBehaviour {
 
 	public Transform hand;
 	public ThirdPersonCharacter FPC;
+    public GameObject Controller;
 	public LineRenderer LR;
 
 	public float force = 75f;
@@ -34,7 +35,11 @@ public class RepelBlast : MonoBehaviour {
 	void Update () {
 		if (cam.enabled) {
 			if (Input.GetButtonDown ("Fire1"))
-				Fire ();
+            {
+                Fire();
+                Controller.GetComponent<ThirdPersonCamera>().SendMessage("Shake");
+            }
+				
 		}
 	}
 
