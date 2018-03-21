@@ -51,6 +51,7 @@ public class ThirdPersonCamera : MonoBehaviour {
     void Shake()
     {
         Debug.Log("Gets here");
+        CameraShaker.Instance.ShakeOnce(4f, 4f, .1f, 0.5f);
     }
 
 }
