@@ -3,6 +3,9 @@ using UnityEngine;
 using System.Collections;
 using UnityEngine.SceneManagement;
 
+// Added to the character for boundary checking
+// Resets character if they go too far
+
 public class BoundsHandler : MonoBehaviour
 {
 

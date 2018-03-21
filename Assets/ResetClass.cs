@@ -4,6 +4,7 @@ using UnityEngine;
 
 // All mighty god reseting class 
 // If this works I might pee a bit
+// Update: I peed a bit
 
 public class ResetClass {
 
