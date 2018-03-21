@@ -146,8 +146,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   lookAt: {fileID: 1120784788}
   camTransform: {fileID: 0}
-  shakeTimer: 2
-  shaking: 0
   speed: 0
 --- !u!4 &112597157
 Transform:
@@ -868,8 +866,8 @@ GameObject:
   - component: {fileID: 890913717}
   - component: {fileID: 890913715}
   - component: {fileID: 890913714}
-  - component: {fileID: 890913719}
   - component: {fileID: 890913718}
+  - component: {fileID: 890913719}
   m_Layer: 0
   m_Name: FirstPersonCharacter
   m_TagString: MainCamera
@@ -1029,15 +1027,13 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 890913713}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bd41cc25c4bc9044895b4fc4e1d2f020, type: 3}
+  m_Script: {fileID: 11500000, guid: 2ab8353b5ebd32545867da143199a814, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  camTransform: {fileID: 890913716}
-  shakeDuration: 2
-  shakeAmount: 0.7
-  decreaseFactor: 1
+  DefaultPosInfluence: {x: 0.15, y: 0.15, z: 0.15}
+  DefaultRotInfluence: {x: 1, y: 1, z: 1}
 --- !u!4 &1120784788
 Transform:
   m_ObjectHideFlags: 0
