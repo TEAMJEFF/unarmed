@@ -9,7 +9,7 @@ public class CameraShake : MonoBehaviour
     public Transform camTransform;
 
     // How long the object should shake for.
-    public float shakeDuration = 2f;
+    public float shakeDuration = 4f;
 
     // Amplitude of the shake. A larger value shakes the camera harder.
     public float shakeAmount = 0.7f;
@@ -22,14 +22,13 @@ public class CameraShake : MonoBehaviour
     {
         if (camTransform == null)
         {
-            camTransform = transform;
+            camTransform = GetComponent(typeof(Transform)) as Transform;
         }
     }
 
     void OnEnable()
     {
         originalPos = camTransform.localPosition;
-        shakeDuration = 2f;
     }
 
     void Update()
@@ -48,7 +47,6 @@ public class CameraShake : MonoBehaviour
         {
             shakeDuration = 0f;
             camTransform.localPosition = originalPos;
-            camTransform.rotation = new Quaternion(0f, 0f, 0f,0f);
         }
     }
 }
