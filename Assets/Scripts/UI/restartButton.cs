@@ -3,6 +3,8 @@ using System.Collections;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
+// Button in the Canvas
+
 public class restartButton : PausingScript {
 
 	public Button button;

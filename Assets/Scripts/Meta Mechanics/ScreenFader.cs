@@ -13,8 +13,13 @@ using UnityEngine.SceneManagement;
 public class ScreenFader : MonoBehaviour
 {
     public Image FadeImg;
-    public float fadeSpeed = 1.5f;
+    public float fadeSpeed;
     public bool sceneStarting = true;
+    private GameObject thePlayer;
+    private CheckPoint checkPoint;
+    private ObjectReset objectReset;
+
+
 
 
 
@@ -25,6 +30,16 @@ public class ScreenFader : MonoBehaviour
 			FadeImg.rectTransform.localScale = new Vector2 (Screen.width, Screen.height);
 			FadeImg.enabled = true;
 		}
+    }
+
+    // Start happens after awake. So everything will be set by now
+    void Start()
+    {
+        thePlayer = GameObject.FindGameObjectWithTag("Player");
+        // Gets the player objects checkpoint info
+        // Gets objects list
+        checkPoint = thePlayer.GetComponent<CheckPoint>();
+        objectReset = thePlayer.GetComponent<ObjectReset>();
     }
 		
 
@@ -43,6 +58,11 @@ public class ScreenFader : MonoBehaviour
         FadeImg.color = Color.Lerp(FadeImg.color, Color.clear, fadeSpeed * Time.deltaTime);
     }
 
+    void newClear()
+    {
+        FadeImg.color = Color.clear;
+        FadeImg.enabled = false;
+    }
 
     void FadeToBlack()
     {
@@ -79,7 +99,7 @@ public class ScreenFader : MonoBehaviour
         {
             FadeToBlack();
 
-            if (FadeImg.color.a >= 0.95f)
+            if (FadeImg.color.a >= 0.99f)
             {
                 SceneManager.LoadScene(SceneNumber);
                 yield break;
@@ -97,6 +117,32 @@ public class ScreenFader : MonoBehaviour
         StartCoroutine("BoundsRestartRoutine", SceneNumber);
     }
 
+    public IEnumerator RestartCheckpointRoutine()
+    {
+        FadeImg.enabled = true;
+        do
+        {
+            FadeToBlack();
+
+            if (FadeImg.color.a >= 0.99f)
+            {
+                objectReset.PleaseReset();
+                checkPoint.resetCharacter();
+                newClear();
+                yield break;
+            }
+            else
+            {
+                yield return null;
+            }
+        } while (true);
+    }
+
+    public void RestartCheckpoint()
+    {
+        //sceneStarting = false;
+        StartCoroutine("RestartCheckpointRoutine");
+    }
 
     public IEnumerator EndSceneRoutine(int SceneNumber)
     {

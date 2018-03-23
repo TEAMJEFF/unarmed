@@ -14,6 +14,7 @@ public class ThirdPersonCamera : MonoBehaviour {
     private Camera cam;
 
     private RaycastHit hit;
+    public bool attached = false;
 
     private float distance = 7.0f;
     private float currentX = 0.0f;
@@ -43,7 +44,7 @@ public class ThirdPersonCamera : MonoBehaviour {
     private void LateUpdate()
     {
         Vector3 dir = new Vector3(0, 3, -distance);
-        Quaternion rotation = Quaternion.Euler(0, 0, 0);
+        Quaternion rotation = Quaternion.Euler(currentY, currentX, 0);
         camTransform.position = lookAt.position + rotation * dir;
         camTransform.LookAt(lookAt.position);
     }
