@@ -95,6 +95,9 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 					timePool -= (Time.deltaTime * (1/SLOWTIME));
 					timeSlider.value = timePool;
 					isSlowed = true;
+
+					// Bring the camera in
+					ThirdPersonCamera.ZoomIn();
 					
 				} else if (timePool >= 0 && inCooldown) {
 
@@ -106,6 +109,8 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 						}
 						timeSlider.value = timePool;
 					}
+
+					ThirdPersonCamera.ZoomOut ();
 
 					// Flash UI
 					StartCoroutine(flashTimeBar());
@@ -127,6 +132,8 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 					}
 					timeSlider.value = timePool;
 				}
+
+				ThirdPersonCamera.ZoomOut ();
 
 			}
 
@@ -179,6 +186,8 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 		}
 
 		public void activateCooldown() {
+
+			ThirdPersonCamera.ZoomOut ();
 
 			StartCoroutine(flashTimeBar ());
 
