@@ -21,6 +21,10 @@ public class RepelBlast : MonoBehaviour {
 	public ThirdPersonCharacter FPC;
 	public LineRenderer LR;
 
+	public Transform particleToAlign;
+	public ParticleSystem particleOne;
+	public ParticleSystem particleTwo;
+
 	public float force = 75f;
 	public float radius = 100f;
 	public float upModifier = 0.25f;
@@ -29,7 +33,7 @@ public class RepelBlast : MonoBehaviour {
 	void Start () {
 		rb = GetComponent<Rigidbody>();
 	}
-	
+
 	// Update is called once per frame
 	void Update () {
 		if (cam.enabled) {
@@ -52,7 +56,7 @@ public class RepelBlast : MonoBehaviour {
 			if (blastDelta > 0) {
 				Debug.Log ("Got time for repel");
 				ThirdPersonUserControl.timePool = blastDelta;
-			
+
 			// Got just enough time to blast, but will enter cooldown
 			} else if (blastDelta >= -1f) {
 				Debug.Log ("Repel, then cooldown");
@@ -77,9 +81,17 @@ public class RepelBlast : MonoBehaviour {
 
 		Debug.Log ("Fire!");
 
+
+
 		if (Physics.Raycast(ray, out hit, MAXFIREDISTANCE, cullingmask))
 		{
 			Debug.Log ("Hit");
+
+			particleToAlign.LookAt(hit.point);
+			particleOne.Emit(1);
+			particleTwo.Emit(1);
+
+
 
 			target = hit.point;
 			if (target.z > transform.position.z - 1)
