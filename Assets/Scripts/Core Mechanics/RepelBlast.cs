@@ -41,7 +41,6 @@ public class RepelBlast : MonoBehaviour
             if (Input.GetButtonDown("Fire1"))
             {
                 Fire();
-                Controller.GetComponent<ThirdPersonCamera>().SendMessage("Shake");
             }
 
         }
@@ -63,6 +62,7 @@ public class RepelBlast : MonoBehaviour
             {
                 Debug.Log("Got time for repel");
                 ThirdPersonUserControl.timePool = blastDelta;
+                Controller.GetComponent<ThirdPersonCamera>().SendMessage("Shake");
 
                 // Got just enough time to blast, but will enter cooldown
             }
@@ -70,6 +70,7 @@ public class RepelBlast : MonoBehaviour
             {
                 Debug.Log("Repel, then cooldown");
                 GameObject thirdPersonUC = GameObject.Find("ThirdPersonController");
+                Controller.GetComponent<ThirdPersonCamera>().SendMessage("Shake");
                 thirdPersonUC.GetComponent<ThirdPersonUserControl>().activateCooldown(); // takes care of timePool
 
                 // Don't got enough time to blast
