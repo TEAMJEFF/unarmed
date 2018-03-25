@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using EZCameraShake;
 using UnityEngine;
 
 public class ThirdPersonCamera : MonoBehaviour {
@@ -46,6 +47,12 @@ public class ThirdPersonCamera : MonoBehaviour {
         Quaternion rotation = Quaternion.Euler(currentY, currentX, 0);
         camTransform.position = lookAt.position + rotation * dir;
         camTransform.LookAt(lookAt.position);
+    }
+
+    void Shake()
+    {
+        Debug.Log("Gets here");
+        CameraShaker.Instance.ShakeOnce(4f, 4f, .1f, 0.5f);
     }
 
 }
