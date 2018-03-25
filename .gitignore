@@ -35,3 +35,12 @@ sysinfo.txt
 # Builds
 *.apk
 *.unitypackage
+Assets/MORPH3D.meta
+Assets/MORPH3D/Resources.meta
+Assets/MORPH3D/Resources/ContentLibrarySO.asset
+Assets/MORPH3D/Resources/ContentLibrarySO.asset.meta
+Assets/MORPH3D/Resources/Prefabs.meta
+Assets/MORPH3D/Resources/Materials.meta
+ProjectSettings/ProjectVersion.txt
+ProjectSettings/ProjectVersion.txt
+ProjectSettings/ProjectVersion.txt
