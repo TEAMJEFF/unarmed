@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityStandardAssets.Characters.ThirdPerson;
@@ -22,6 +22,10 @@ public class RepelBlast : MonoBehaviour
     public ThirdPersonCharacter FPC;
     public GameObject Controller;
     public LineRenderer LR;
+
+	  public Transform particleToAlign;
+	  public ParticleSystem particleOne;
+    public ParticleSystem particleTwo;
 
     public float force = 75f;
     public float radius = 100f;
@@ -99,6 +103,10 @@ public class RepelBlast : MonoBehaviour
         {
             Debug.Log("Hit");
 
+            particleToAlign.LookAt(hit.point);
+      			particleOne.Emit(1);
+            particleTwo.Emit(1);
+            
             target = hit.point;
             if (target.z > transform.position.z - 1)
             {
