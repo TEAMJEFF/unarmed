@@ -13,6 +13,7 @@ using UnityEngine.SceneManagement;
 public class ScreenFader : MonoBehaviour
 {
     public Image FadeImg;
+    public Image otherFadeImg;
     public float fadeSpeed;
     public bool sceneStarting = true;
     private GameObject thePlayer;
@@ -29,7 +30,9 @@ public class ScreenFader : MonoBehaviour
 		{
 			FadeImg.rectTransform.localScale = new Vector2 (Screen.width, Screen.height);
 			FadeImg.enabled = true;
-		}
+            otherFadeImg.rectTransform.localScale = new Vector2(Screen.width, Screen.height);
+            otherFadeImg.enabled = false;
+        }
     }
 
     // Start happens after awake. So everything will be set by now
@@ -60,8 +63,8 @@ public class ScreenFader : MonoBehaviour
 
     void newClear()
     {
-        FadeImg.color = Color.clear;
-        FadeImg.enabled = false;
+        otherFadeImg.color = Color.clear;
+        otherFadeImg.enabled = false;
     }
 
     void FadeToBlack()
@@ -81,6 +84,7 @@ public class ScreenFader : MonoBehaviour
         // If the texture is almost clear...
         if (FadeImg.color.a <= 0.05f)
         {
+            Debug.Log("In the clear");
             // ... set the colour to clear and disable the RawImage.
             FadeImg.color = Color.clear;
             FadeImg.enabled = false;
@@ -124,11 +128,11 @@ public class ScreenFader : MonoBehaviour
         {
             FadeToBlack();
 
-            if (FadeImg.color.a >= 0.99f)
+            if (FadeImg.color.a >= 0.95f)
             {
                 objectReset.PleaseReset();
                 checkPoint.resetCharacter();
-                newClear();
+                sceneStarting = true;
                 yield break;
             }
             else
@@ -140,7 +144,7 @@ public class ScreenFader : MonoBehaviour
 
     public void RestartCheckpoint()
     {
-        //sceneStarting = false;
+        sceneStarting = false;
         StartCoroutine("RestartCheckpointRoutine");
     }
 
@@ -165,6 +169,34 @@ public class ScreenFader : MonoBehaviour
                 yield return null;
             }
         } while (true);
+    }
+
+    public IEnumerator fallResetRoutine()
+    {
+        otherFadeImg.enabled = true;
+        do
+        {
+            FadeToBlack();
+
+            if (otherFadeImg.color.a >= 0.95f)
+            {
+                objectReset.PleaseReset();
+                checkPoint.resetCharacter();
+                sceneStarting = true;
+                newClear();
+                yield break;
+            }
+            else
+            {
+                yield return null;
+            }
+        } while (true);
+    }
+
+    public void fallReset()
+    {
+        sceneStarting = false;
+        StartCoroutine("fallResetRoutine");
     }
 
     public void EndScene(int SceneNumber)

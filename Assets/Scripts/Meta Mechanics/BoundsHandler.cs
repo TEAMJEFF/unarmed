@@ -27,7 +27,7 @@ public class BoundsHandler : MonoBehaviour
 
     void Awake()
     {
-        fadeScr = GameObject.FindObjectOfType<ScreenFader>();
+        fadeScr = FindObjectOfType<ScreenFader>();
         thePlayer = GameObject.FindGameObjectWithTag("Player");
         thisScene = SceneManager.GetActiveScene();
         SceneNumb = thisScene.buildIndex;
@@ -54,7 +54,8 @@ public class BoundsHandler : MonoBehaviour
 					if (resetTime < Time.time) 
 					{
 						isOut = false;
-						fadeScr.BoundsRestart (SceneNumb);
+                        //fadeScr.BoundsRestart (SceneNumb);
+                        fadeScr.RestartCheckpoint();
 					}
 				}
 				//fadeScr.BoundsRestart (SceneNumb);
@@ -73,7 +74,9 @@ public class BoundsHandler : MonoBehaviour
         // Lastly check to make sure not below certain Y
         if(thePlayer.transform.position.y < LOW_Y)
         {
-            fadeScr.BoundsRestart(SceneNumb);
+            //fadeScr.BoundsRestart(SceneNumb);
+            //fadeScr.RestartCheckpoint();
+            fadeScr.fallReset();
         }
     }
    /*
