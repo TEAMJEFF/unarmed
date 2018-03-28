@@ -13765,6 +13765,7 @@ GameObject:
   - component: {fileID: 890913720}
   - component: {fileID: 890913719}
   - component: {fileID: 890913718}
+  - component: {fileID: 890913721}
   - component: {fileID: 890913715}
   - component: {fileID: 890913714}
   m_Layer: 0
@@ -14014,6 +14015,19 @@ AudioListener:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 890913713}
   m_Enabled: 1
+--- !u!114 &890913721
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 890913713}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2ab8353b5ebd32545867da143199a814, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  DefaultPosInfluence: {x: 0.15, y: 0.15, z: 0.15}
+  DefaultRotInfluence: {x: 1, y: 1, z: 1}
 --- !u!114 &891364325 stripped
 MonoBehaviour:
   m_PrefabParentObject: {fileID: 114921476642277052, guid: 0245a3376e33ac04d8d2a90889a3aeaa,
@@ -17007,7 +17021,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce7a80d520cacc042b5fe14f373d8173, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_MovingTurnSpeed: 360
+  m_MovingTurnSpeed: 1500
   m_StationaryTurnSpeed: 180
   m_JumpPower: 12
   m_GravityMultiplier: 2
@@ -17429,6 +17443,7 @@ MonoBehaviour:
   unitHit: {fileID: 0}
   hand: {fileID: 0}
   FPC: {fileID: 1120784789}
+  Controller: {fileID: 112597155}
   LR: {fileID: 1143577836}
   force: 10000
   radius: 1000
