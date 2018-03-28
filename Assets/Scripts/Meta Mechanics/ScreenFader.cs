@@ -51,6 +51,7 @@ public class ScreenFader : MonoBehaviour
         // If the scene is starting...
         if (sceneStarting)
             // ... call the StartScene function.
+            //Debug.Log("Hello");
             StartScene();
     }
 
