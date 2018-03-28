@@ -19,7 +19,8 @@ public class RepelBlast : MonoBehaviour {
 
 	public Transform hand;
 	public ThirdPersonCharacter FPC;
-	public LineRenderer LR;
+    public GameObject Controller;
+    public LineRenderer LR;
 
 	public float force = 75f;
 	public float radius = 100f;
@@ -52,15 +53,17 @@ public class RepelBlast : MonoBehaviour {
 			if (blastDelta > 0) {
 				Debug.Log ("Got time for repel");
 				ThirdPersonUserControl.timePool = blastDelta;
-			
-			// Got just enough time to blast, but will enter cooldown
-			} else if (blastDelta >= -1f) {
+                Controller.GetComponent<ThirdPersonCamera>().SendMessage("Shake");
+
+                // Got just enough time to blast, but will enter cooldown
+            } else if (blastDelta >= -1f) {
 				Debug.Log ("Repel, then cooldown");
 				GameObject thirdPersonUC = GameObject.Find ("ThirdPersonController");
 				thirdPersonUC.GetComponent<ThirdPersonUserControl> ().activateCooldown (); // takes care of timePool
+                Controller.GetComponent<ThirdPersonCamera>().SendMessage("Shake");
 
-			// Don't got enough time to blast
-			} else {
+                // Don't got enough time to blast
+            } else {
 				Debug.Log ("Not enough time for blast");
 				GameObject thirdPersonUC = GameObject.Find ("ThirdPersonController");
 				StartCoroutine(thirdPersonUC.GetComponent<ThirdPersonUserControl> ().flashTimeBar ());
