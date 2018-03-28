@@ -38,7 +38,7 @@ public class BoundsHandler : MonoBehaviour
     void Update()
     {
         //Debug.Log(thePlayer.transform.position.x);
-        Debug.Log(thePlayer.transform.position.y);
+        //Debug.Log(thePlayer.transform.position.y);
 		if (thePlayer.transform.position.x > MAX_X | thePlayer.transform.position.x < MIN_X) 
 		{
 			if (thePlayer.transform.position.y < MIN_Y) 
