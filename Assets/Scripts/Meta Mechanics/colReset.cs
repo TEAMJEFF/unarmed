@@ -24,7 +24,7 @@ public class colReset : MonoBehaviour
 	// In collision for certain period reset
 	void OnCollisionEnter(Collision col)
 	{
-		if (col.gameObject.layer == 9) 
+		if (col.gameObject.layer == 9)  
 		{
 			//Debug.Log ("It hit");
 			if (!isHit) 
@@ -32,15 +32,15 @@ public class colReset : MonoBehaviour
 				resetTime = Time.time + resetSeconds;
 				isHit = true;
 			} 
-//			else 
-//			{
-//				Debug.Log ("Right before time check");
-//				if (resetTime < Time.time) 
-//				{
-//					isHit = false;
-//					fadeScr.BoundsRestart (SceneNumber);
-//				}
-//			}
+		}
+		if (col.gameObject.layer == 10)  
+		{
+			//Debug.Log ("It hit");
+			if (!isHit) 
+			{
+				resetTime = Time.time + resetSeconds;
+				isHit = true;
+			} 
 		}
 			
 
@@ -55,6 +55,10 @@ public class colReset : MonoBehaviour
 		}
 		//Debug.Log ("It Unhit");
 		//isHit = false;
+		if (col.gameObject.layer == 10) 
+		{
+			isHit = false;
+		}
 	}
 
 	void Update()

@@ -23,17 +23,23 @@ public class RepelBlast : MonoBehaviour {
 
 	public Transform hand;
 	public ThirdPersonCharacter TPC;
-    public GameObject Controller;
-    public LineRenderer LR;
+	public GameObject Controller;
+	public LineRenderer LR;
 
 	public float force = 75f;
 	public float radius = 100f;
 	public float upModifier = 0.25f;
 
+	AudioSource[] audiosAmigos;
+	AudioSource blast;
+
 	// Use this for initialization
 	void Start () {
 		rb = GetComponent<Rigidbody>();
 		TPC = GetComponent<ThirdPersonCharacter> ();
+		cam = Camera.main;
+		audiosAmigos = cam.GetComponents<AudioSource> ();
+		blast = audiosAmigos [2];
 	}
 
 	// Update is called once per frame
@@ -58,24 +64,24 @@ public class RepelBlast : MonoBehaviour {
 			if (blastDelta > 0) {
 				Debug.Log ("Got time for repel");
 				ThirdPersonUserControl.timePool = blastDelta;
-                Controller.GetComponent<ThirdPersonCamera>().SendMessage("Shake");
+				Controller.GetComponent<ThirdPersonCamera>().SendMessage("Shake");
 
-                // Got just enough time to blast, but will enter cooldown
-            } else if (blastDelta >= -1f) {
+				// Got just enough time to blast, but will enter cooldown
+			} else if (blastDelta >= -1f) {
 				Debug.Log ("Repel, then cooldown");
 				GameObject thirdPersonUC = GameObject.Find ("ThirdPersonController");
 				thirdPersonUC.GetComponent<ThirdPersonUserControl> ().activateCooldown (); // takes care of timePool
-                Controller.GetComponent<ThirdPersonCamera>().SendMessage("Shake");
+				Controller.GetComponent<ThirdPersonCamera>().SendMessage("Shake");
 
-                // Don't got enough time to blast
-            } else {
+				// Don't got enough time to blast
+			} else {
 				Debug.Log ("Not enough time for blast");
 				GameObject thirdPersonUC = GameObject.Find ("ThirdPersonController");
 				StartCoroutine(thirdPersonUC.GetComponent<ThirdPersonUserControl> ().flashTimeBar ());
 				return;
 			}
 
-		// If in cooldown, flash the timebar
+			// If in cooldown, flash the timebar
 		} else {
 			Debug.Log ("Flash it biyatch");
 			GameObject thirdPersonUC = GameObject.Find ("ThirdPersonController");
@@ -84,6 +90,7 @@ public class RepelBlast : MonoBehaviour {
 		}
 
 		Debug.Log ("Fire!");
+		blast.Play ();
 
 		if (Physics.Raycast(ray, out hit, MAXFIREDISTANCE, cullingmask))
 		{
@@ -92,7 +99,7 @@ public class RepelBlast : MonoBehaviour {
 			particleToAlign.LookAt(hit.point);
 			particleOne.Emit(1);
 			particleTwo.Emit(1);
-			
+
 			target = hit.point;
 			if (target.z > transform.position.z - 1)
 			{

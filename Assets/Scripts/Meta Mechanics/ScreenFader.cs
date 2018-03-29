@@ -76,6 +76,11 @@ public class ScreenFader : MonoBehaviour
         FadeImg.color = Color.Lerp(FadeImg.color, Color.black, fadeSpeed * Time.deltaTime);
     }
 
+	void newFade()
+	{
+		otherFadeImg.color = Color.Lerp(FadeImg.color, Color.black, fadeSpeed * Time.deltaTime);
+	}
+
 
     void StartScene()
     {
@@ -177,7 +182,7 @@ public class ScreenFader : MonoBehaviour
         otherFadeImg.enabled = true;
         do
         {
-            FadeToBlack();
+			newFade();
 
             if (otherFadeImg.color.a >= 0.95f)
             {
