@@ -17,6 +17,10 @@ public class RepelBlast : MonoBehaviour {
 	public Vector3 target;
 	public Rigidbody unitHit;
 
+	public Transform particleToAlign;
+	public ParticleSystem particleOne;
+	public ParticleSystem particleTwo;
+
 	public Transform hand;
 	public ThirdPersonCharacter FPC;
     public GameObject Controller;
@@ -30,7 +34,7 @@ public class RepelBlast : MonoBehaviour {
 	void Start () {
 		rb = GetComponent<Rigidbody>();
 	}
-	
+
 	// Update is called once per frame
 	void Update () {
 		if (cam.enabled) {
@@ -84,6 +88,10 @@ public class RepelBlast : MonoBehaviour {
 		{
 			Debug.Log ("Hit");
 
+			particleToAlign.LookAt(hit.point);
+			particleOne.Emit(1);
+			particleTwo.Emit(1);
+			
 			target = hit.point;
 			if (target.z > transform.position.z - 1)
 			{
