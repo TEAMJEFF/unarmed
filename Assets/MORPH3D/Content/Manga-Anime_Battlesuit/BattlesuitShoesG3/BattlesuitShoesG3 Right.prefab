@@ -19,8 +19,6 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4384381452864764}
-  - component: {fileID: 95087261865310964}
-  - component: {fileID: 205939971865595324}
   - component: {fileID: 114986214066990770}
   - component: {fileID: 114865289944769036}
   m_Layer: 0
@@ -4256,23 +4254,6 @@ Transform:
   m_Father: {fileID: 4733342253199838}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!95 &95087261865310964
-Animator:
-  serializedVersion: 3
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1006726173089558}
-  m_Enabled: 1
-  m_Avatar: {fileID: 9000000, guid: 32a5b3eb6893b81439facec6129f4374, type: 3}
-  m_Controller: {fileID: 0}
-  m_CullingMode: 1
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
 --- !u!114 &114063237921524766
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -4685,32 +4666,3 @@ SkinnedMeshRenderer:
     m_Center: {x: 0.13198283, y: -1.0083746, z: 0.0069888905}
     m_Extent: {x: 0.07616427, y: 0.08860281, z: 0.13727215}
   m_DirtyAABB: 0
---- !u!205 &205939971865595324
-LODGroup:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1006726173089558}
-  serializedVersion: 2
-  m_LocalReferencePoint: {x: 0.13218048, y: 0.043133497, z: 0.02496545}
-  m_Size: 0.27549028
-  m_FadeMode: 0
-  m_AnimateCrossFading: 0
-  m_LODs:
-  - screenRelativeHeight: 0.25
-    fadeTransitionWidth: 0
-    renderers:
-    - renderer: {fileID: 137460515734122790}
-  - screenRelativeHeight: 0.125
-    fadeTransitionWidth: 0
-    renderers:
-    - renderer: {fileID: 137112260691024862}
-  - screenRelativeHeight: 0.0625
-    fadeTransitionWidth: 0
-    renderers:
-    - renderer: {fileID: 137881233807654402}
-  - screenRelativeHeight: 0.01
-    fadeTransitionWidth: 0
-    renderers:
-    - renderer: {fileID: 137822401734504164}
-  m_Enabled: 1
