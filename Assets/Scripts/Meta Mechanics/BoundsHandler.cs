@@ -20,9 +20,6 @@ public class BoundsHandler : MonoBehaviour
     public float LOW_Y; // used for reset
 	private float resetTime;
 	private bool isOut;
-    //private float MAX_X = 525f;
-    //private float MIN_X = 510f;
-    //private float MIN_Y = 30f;
 
 
     void Awake()
@@ -72,22 +69,24 @@ public class BoundsHandler : MonoBehaviour
 		}
 
         // Lastly check to make sure not below certain Y
+		//Debug.Log(LOW_Y);
+		Debug.Log (thePlayer.transform.position.y);
         if(thePlayer.transform.position.y < LOW_Y)
         {
             //fadeScr.BoundsRestart(SceneNumb);
             //fadeScr.RestartCheckpoint();
+			Debug.Log("Reset");
             fadeScr.fallReset();
         }
     }
-   /*
+
     void OnTriggerEnter(Collider col)
     {
-        if (col.gameObject.tag == "Player")
+        if (col.gameObject.layer == 4)
         {
-            fadeScr.EndScene(SceneNumb);
+			fadeScr.RestartCheckpoint ();
         }
     }
-    */
 
     
 }
