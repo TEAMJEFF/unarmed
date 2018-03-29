@@ -17,6 +17,7 @@ public class BoundsHandler : MonoBehaviour
     public float MIN_Y;
     public float MIN_X;
 	public float resetSeconds;
+    public float LOW_Y; // used for reset
 	private float resetTime;
 	private bool isOut;
     //private float MAX_X = 525f;
@@ -26,7 +27,7 @@ public class BoundsHandler : MonoBehaviour
 
     void Awake()
     {
-        fadeScr = GameObject.FindObjectOfType<ScreenFader>();
+        fadeScr = FindObjectOfType<ScreenFader>();
         thePlayer = GameObject.FindGameObjectWithTag("Player");
         thisScene = SceneManager.GetActiveScene();
         SceneNumb = thisScene.buildIndex;
@@ -37,6 +38,7 @@ public class BoundsHandler : MonoBehaviour
     void Update()
     {
         //Debug.Log(thePlayer.transform.position.x);
+        //Debug.Log(thePlayer.transform.position.y);
 		if (thePlayer.transform.position.x > MAX_X | thePlayer.transform.position.x < MIN_X) 
 		{
 			if (thePlayer.transform.position.y < MIN_Y) 
@@ -52,7 +54,8 @@ public class BoundsHandler : MonoBehaviour
 					if (resetTime < Time.time) 
 					{
 						isOut = false;
-						fadeScr.BoundsRestart (SceneNumb);
+                        //fadeScr.BoundsRestart (SceneNumb);
+                        fadeScr.RestartCheckpoint();
 					}
 				}
 				//fadeScr.BoundsRestart (SceneNumb);
@@ -67,6 +70,14 @@ public class BoundsHandler : MonoBehaviour
 				isOut = false;
 			}
 		}
+
+        // Lastly check to make sure not below certain Y
+        if(thePlayer.transform.position.y < LOW_Y)
+        {
+            //fadeScr.BoundsRestart(SceneNumb);
+            //fadeScr.RestartCheckpoint();
+            fadeScr.fallReset();
+        }
     }
    /*
     void OnTriggerEnter(Collider col)
