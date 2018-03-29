@@ -22,7 +22,7 @@ public class RepelBlast : MonoBehaviour {
 	public ParticleSystem particleTwo;
 
 	public Transform hand;
-	public ThirdPersonCharacter FPC;
+	public ThirdPersonCharacter TPC;
     public GameObject Controller;
     public LineRenderer LR;
 
@@ -33,6 +33,7 @@ public class RepelBlast : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		rb = GetComponent<Rigidbody>();
+		TPC = GetComponent<ThirdPersonCharacter> ();
 	}
 
 	// Update is called once per frame
@@ -110,12 +111,19 @@ public class RepelBlast : MonoBehaviour {
 
 						Vector3 direction = -transform.forward * force;
 						GameObject target = hit.transform.gameObject;
-						Debug.Log ("Name of unanchored " + target.name);
+						Debug.Log ("Name of anchored " + target.name);
 						if (target.name.Contains ("Lever")) {
+							Debug.Log ("Lever");
 							target.SendMessage ("PulledDown");
 						} else {
-							rb.AddExplosionForce (1000f, hit.point, 80f, 0.3f);
-							// rb.AddForce (direction, ForceMode.Impulse);
+							if (TPC.m_IsGrounded) {
+								Debug.Log ("Blast Anchored Grounded");
+								rb.AddExplosionForce (1000f, hit.point, 100f, 0.5f);
+							} else {
+								Debug.Log ("Blast Anchored Ungrounded");
+								rb.AddExplosionForce (800f, hit.point, 100f, 0.3f);
+								// rb.AddForce (direction, ForceMode.Impulse);
+							}
 						}
 
 
