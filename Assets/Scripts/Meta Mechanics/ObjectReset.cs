@@ -6,6 +6,7 @@ public class ObjectReset : MonoBehaviour {
 
     private GameObject[] gameObjects;
     private List<ResetClass> resets;
+	//private Rigidbody body;
     
 
 	// Use this for initialization
@@ -20,6 +21,10 @@ public class ObjectReset : MonoBehaviour {
             {
                 resets.Add(new ResetClass(gameObjects[i], gameObjects[i].transform.position, gameObjects[i].transform.rotation));
             }
+			if (gameObjects [i].layer == 1) 
+			{
+				resets.Add(new ResetClass(gameObjects[i], gameObjects[i].transform.position, gameObjects[i].transform.rotation));
+			}
         }
 	}
 
