@@ -27,12 +27,16 @@ public class ResetClass {
     // Reset position
     public void ResetThePositions()
     {
-		gameObject.SetActive (true);
-        gameObject.transform.position = resetPosition;
-        gameObject.transform.rotation = resetRotation;
 		if (body != null) 
 		{
 			body.velocity = new Vector3 (0f, 0f, 0f);
 		}
+		gameObject.SetActive (true);
+        gameObject.transform.position = resetPosition;
+        gameObject.transform.rotation = resetRotation;
+//		if (body != null) 
+//		{
+//			body.velocity = new Vector3 (0f, 0f, 0f);
+//		}
     }
 }
