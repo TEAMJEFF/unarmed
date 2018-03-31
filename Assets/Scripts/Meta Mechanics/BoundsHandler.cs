@@ -70,7 +70,7 @@ public class BoundsHandler : MonoBehaviour
 
         // Lastly check to make sure not below certain Y
 		//Debug.Log(LOW_Y);
-		Debug.Log (thePlayer.transform.position.y);
+		//Debug.Log (thePlayer.transform.position.y);
         if(thePlayer.transform.position.y < LOW_Y)
         {
             //fadeScr.BoundsRestart(SceneNumb);
