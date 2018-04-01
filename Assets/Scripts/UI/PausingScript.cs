@@ -11,7 +11,16 @@ public class PausingScript : MonoBehaviour {
 
 	public CanvasGroup UICanvas;
 	public bool isPaused = false;
+	private freezePlayer freeze;
+	private GameObject thePlayer;
 	MonoBehaviour unit;
+
+	void Awake()
+	{
+		thePlayer = GameObject.FindGameObjectWithTag ("Player");
+		freeze = thePlayer.GetComponent<freezePlayer> ();
+		//Debug.Log (thePlayer.name);
+	}
 
 
 	// Use this for initialization
@@ -21,6 +30,9 @@ public class PausingScript : MonoBehaviour {
 		mainCam.GetComponent<Camera> ();
 		mainCam.enabled = true;
 		pauseCam.enabled = false;
+		//freeze = GameObject.FindGameObjectWithTag ("Player").GetComponent<freezePlayer> ();
+		//thePlayer = GameObject.FindGameObjectWithTag("Player");
+		//freeze = thePlayer.GetComponent<freezePlayer>();
 
 	}
 
@@ -64,6 +76,7 @@ public class PausingScript : MonoBehaviour {
 		Time.timeScale = 1f;
 		mainCam.enabled = true;
 		pauseCam.enabled = false;
+		freeze.freezeOnPause ();
 	}
 
 	public void pause()

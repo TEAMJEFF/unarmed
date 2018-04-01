@@ -25,6 +25,10 @@ public class ObjectReset : MonoBehaviour {
             {
                 resets.Add(new ResetClass(gameObjects[i], gameObjects[i].transform.position, gameObjects[i].transform.rotation));
             }
+			if (gameObjects [i].layer == 1) 
+			{
+				resets.Add(new ResetClass(gameObjects[i], gameObjects[i].transform.position, gameObjects[i].transform.rotation));
+			}
         }
 	}
 

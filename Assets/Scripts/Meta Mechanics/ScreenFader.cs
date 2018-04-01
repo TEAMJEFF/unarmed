@@ -19,6 +19,8 @@ public class ScreenFader : MonoBehaviour
     private GameObject thePlayer;
     private CheckPoint checkPoint;
     private ObjectReset objectReset;
+	private freezePlayer freeze;
+	private bool isFroze;
 
 
 
@@ -43,6 +45,7 @@ public class ScreenFader : MonoBehaviour
         // Gets objects list
         checkPoint = thePlayer.GetComponent<CheckPoint>();
         objectReset = thePlayer.GetComponent<ObjectReset>();
+		freeze = thePlayer.GetComponent<freezePlayer> ();
     }
 		
 
@@ -53,6 +56,12 @@ public class ScreenFader : MonoBehaviour
             // ... call the StartScene function.
             //Debug.Log("Hello");
             StartScene();
+		if (isFroze) 
+		{
+			Debug.Log ("Here");
+			freeze.freezeOnStart ();
+			isFroze = false;
+		}
     }
 
 
@@ -86,6 +95,7 @@ public class ScreenFader : MonoBehaviour
     {
         // Fade the texture to clear.
         FadeToClear();
+		freeze.freezeOnStart ();
 
         // If the texture is almost clear...
         if (FadeImg.color.a <= 0.05f)
@@ -139,6 +149,7 @@ public class ScreenFader : MonoBehaviour
                 objectReset.PleaseReset();
                 checkPoint.resetCharacter();
                 sceneStarting = true;
+				//freeze.freezeOnStart();
                 yield break;
             }
             else
@@ -151,7 +162,9 @@ public class ScreenFader : MonoBehaviour
     public void RestartCheckpoint()
     {
         sceneStarting = false;
-        StartCoroutine("RestartCheckpointRoutine");
+		isFroze = true;
+		//freeze.freezeOnStart();
+		StartCoroutine ("RestartCheckpointRoutine");
     }
 
     public IEnumerator EndSceneRoutine(int SceneNumber)
