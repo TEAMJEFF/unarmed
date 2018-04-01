@@ -1,17 +1,21 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using UnityStandardAssets.Characters.FirstPerson;
 using UnityEngine;
 
 public class ObjectReset : MonoBehaviour {
 
     private GameObject[] gameObjects;
     private List<ResetClass> resets;
-	//private Rigidbody body;
-    
+    public GameObject FPC;
 
-	// Use this for initialization
+    private void Start()
+    {
+        FPC = GameObject.Find("FPSController");
+    }
+    // Use this for initialization
     // ONLY DONE ONCE 
-	void Awake()
+    void Awake()
     {
         resets = new List<ResetClass>();
         gameObjects = FindObjectsOfType<GameObject>();
@@ -35,6 +39,7 @@ public class ObjectReset : MonoBehaviour {
         {
             resets[i].ResetThePositions();
         }
+        FPC.GetComponent<CameraSightline>().ResetTransparency();
     }
 	
 }
