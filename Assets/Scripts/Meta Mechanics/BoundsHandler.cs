@@ -70,16 +70,18 @@ public class BoundsHandler : MonoBehaviour
 
         // Lastly check to make sure not below certain Y
 		//Debug.Log(LOW_Y);
-		Debug.Log (thePlayer.transform.position.y);
+		//Debug.Log (thePlayer.transform.position.y);
+		// THIS IS NO LONGER USED
         if(thePlayer.transform.position.y < LOW_Y)
         {
             //fadeScr.BoundsRestart(SceneNumb);
             //fadeScr.RestartCheckpoint();
-			Debug.Log("Reset");
+			//Debug.Log("Reset");
             fadeScr.fallReset();
         }
     }
 
+	// Uses a layer to reset on fall
     void OnTriggerEnter(Collider col)
     {
         if (col.gameObject.layer == 4)
