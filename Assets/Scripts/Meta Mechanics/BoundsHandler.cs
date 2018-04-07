@@ -34,8 +34,9 @@ public class BoundsHandler : MonoBehaviour
     // Update checks bounds
     void Update()
     {
-        //Debug.Log(thePlayer.transform.position.x);
-        //Debug.Log(thePlayer.transform.position.y);
+//		Debug.Log("X: " + thePlayer.transform.position.x.ToString());
+//		Debug.Log("Y: " + thePlayer.transform.position.y.ToString());
+//		Debug.Log("Z: " + thePlayer.transform.position.z.ToString());
 		if (thePlayer.transform.position.x > MAX_X | thePlayer.transform.position.x < MIN_X) 
 		{
 			if (thePlayer.transform.position.y < MIN_Y) 
