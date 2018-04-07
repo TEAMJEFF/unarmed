@@ -13,7 +13,7 @@ public class CheckPoint : MonoBehaviour {
     public Text checkpointText;
     private bool onHit;
     private float timer;
-
+	private resetPosition newPoint;
 
 	// Use this for initialization
 	void Awake()
@@ -28,7 +28,6 @@ public class CheckPoint : MonoBehaviour {
 	// Update is called once per frame
 	void Update ()
     {
-		if(onHit)
         {
             if(timer != 0f)
             {
@@ -46,10 +45,15 @@ public class CheckPoint : MonoBehaviour {
     {
         if(collider.gameObject.tag == "Respawn")
         {
-            Debug.Log("I am dah best");
+			Debug.Log ("X: " + gameObject.transform.position.x.ToString ());
+			Debug.Log ("Y: " + gameObject.transform.position.y.ToString ());
+			Debug.Log ("Z: " + gameObject.transform.position.z.ToString ());
+            //Debug.Log("I am dah best");
             onHit = true;
             timer = Time.fixedTime;
-            spawnPoint = gameObject.transform.position;
+			newPoint = collider.GetComponent<resetPosition> ();
+			spawnPoint = newPoint.getReset ();
+            //spawnPoint = gameObject.transform.position;
             checkpointText.enabled = true;
         }
     }

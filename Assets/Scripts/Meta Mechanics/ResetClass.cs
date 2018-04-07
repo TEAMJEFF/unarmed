@@ -8,6 +8,10 @@ using UnityEngine;
 
 public class ResetClass {
 
+	// Public point to reset too
+	public float xReset;
+	public float yReset;
+	public float zReset;
 
     private GameObject gameObject;
     private Vector3 resetPosition;
