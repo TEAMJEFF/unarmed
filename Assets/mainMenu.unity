@@ -434,6 +434,8 @@ MonoBehaviour:
   optionButtons: {fileID: 1042285521}
   optionButton: {fileID: 550772509}
   goBack: {fileID: 371582138}
+  bgmSliderVol: {fileID: 304754148}
+  sfxSliderVol: {fileID: 1845948622}
 --- !u!1 &220525092
 GameObject:
   m_ObjectHideFlags: 0
@@ -568,7 +570,7 @@ GameObject:
   - component: {fileID: 304754147}
   - component: {fileID: 304754148}
   m_Layer: 5
-  m_Name: MusicSlider
+  m_Name: MusicSliderMain
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -969,6 +971,18 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 0
+--- !u!114 &523047102
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 523047094}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e1760a73c3695477fa085f8136db47dc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bgm: {fileID: 523047095}
 --- !u!1 &550772506
 GameObject:
   m_ObjectHideFlags: 0
@@ -1936,7 +1950,7 @@ GameObject:
   - component: {fileID: 1845948621}
   - component: {fileID: 1845948622}
   m_Layer: 5
-  m_Name: MusicSlider
+  m_Name: MusicSliderSfx
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
