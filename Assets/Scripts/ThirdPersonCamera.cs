@@ -76,8 +76,8 @@ public class ThirdPersonCamera : MonoBehaviour {
 		distance = Mathf.Lerp(distance, closeDist, rate);
 		camHeight = Mathf.Lerp (camHeight, closeHeight, rate);
 
-		bgm.volume = Mathf.Lerp (bgm.volume, 0.10f, 0.04f);
-		heartbeat.volume = Mathf.Lerp (heartbeat.volume, 1.0f, 0.1f);
+		bgm.volume = Mathf.Lerp (bgm.volume, PlayerPrefs.GetFloat("bgmVolume"), 0.04f);
+		heartbeat.volume = Mathf.Lerp (heartbeat.volume, PlayerPrefs.GetFloat("sfxVolume"), 0.1f);
 
 		fshh.strengthX = Mathf.Lerp (fshh.strengthX, 0.3f, 0.08f);
 
@@ -87,7 +87,7 @@ public class ThirdPersonCamera : MonoBehaviour {
 		distance = Mathf.Lerp(distance, farDist, rate);
 		camHeight = Mathf.Lerp (camHeight, farHeight, rate);
 
-		bgm.volume = Mathf.Lerp (bgm.volume, 0.9f, 0.08f);
+		bgm.volume = Mathf.Lerp (bgm.volume, PlayerPrefs.GetFloat("bgmVolume"), 0.08f);
 		heartbeat.volume = Mathf.Lerp (heartbeat.volume, 0.0f, 0.08f);
 
 		fshh.strengthX = Mathf.Lerp (fshh.strengthX, 0.0f, 0.08f);
