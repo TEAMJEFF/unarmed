@@ -101,7 +101,7 @@ public class RepelBlast : MonoBehaviour {
 			particleTwo.Emit(1);
 
 			target = hit.point;
-			if (target.z > transform.position.z - 1)
+			if (target.z > transform.position.z - 1.3)
 			{
 				// What did we hit?
 				if (hit.transform.gameObject.layer == LayerMask.NameToLayer ("Unanchored")) {
@@ -112,9 +112,10 @@ public class RepelBlast : MonoBehaviour {
 					GameObject target = hit.transform.gameObject;
 					unitHit = target.GetComponent<Rigidbody> ();
 					unitHit.AddExplosionForce (800f, transform.position, 80f, 0.25f);
-				} else if (hit.transform.gameObject.layer == LayerMask.NameToLayer ("Anchored")) {
+				} else if (hit.transform.gameObject.layer == LayerMask.NameToLayer ("Anchored") || 
+							hit.transform.gameObject.layer == LayerMask.NameToLayer ("Blastable")) {
 					{
-						Debug.Log ("Anchored");
+						Debug.Log ("Anchored|Blastable");
 
 						Vector3 direction = -transform.forward * force;
 						GameObject target = hit.transform.gameObject;
