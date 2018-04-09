@@ -14,12 +14,13 @@ public class AudioHandler : MonoBehaviour {
 	void Start()
 	{
 
-		if (PlayerPrefs.GetFloat ("bgmVolume") == 0) 
+		if (!PlayerPrefs.HasKey ("bgmVolume")) 
 		{
+			Debug.Log ("Here");
 			PlayerPrefs.SetFloat ("bgmVolume", 100f);
 			PlayerPrefs.Save ();
 		}
-		if (PlayerPrefs.GetFloat ("sfxVolume") == 0) 
+		if (!PlayerPrefs.HasKey ("sfxVolume")) 
 		{
 			PlayerPrefs.SetFloat ("sfxVolume", 100f);
 			PlayerPrefs.Save ();
@@ -45,15 +46,20 @@ public class AudioHandler : MonoBehaviour {
 					//Debug.Log (initalsound.Length);
 					for (int x = 0; x < initalsound.Length; x++) 
 					{
-						if (initalsound [x].name != bgm.name) 
+						if (initalsound [x] != bgm) 
 						{
-							sfx.Add (initalsound [i]);
+							sfx.Add (initalsound [x]);
 						}
 					}
 				}
 			}
 
 		}
+
+		UpdateVolumes ();
+		Debug.Log (bgm.volume);
+		Debug.Log(bgm.clip.ToString());
+		bgm.volume = 0f;
 	}
 
 
