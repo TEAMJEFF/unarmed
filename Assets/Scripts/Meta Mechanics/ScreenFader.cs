@@ -21,6 +21,7 @@ public class ScreenFader : MonoBehaviour
     private ObjectReset objectReset;
 	private freezePlayer freeze;
 	private bool isFroze;
+	private UnityStandardAssets.Characters.ThirdPerson.ThirdPersonUserControl slowTime;
 
 
 
@@ -46,6 +47,7 @@ public class ScreenFader : MonoBehaviour
         checkPoint = thePlayer.GetComponent<CheckPoint>();
         objectReset = thePlayer.GetComponent<ObjectReset>();
 		freeze = thePlayer.GetComponent<freezePlayer> ();
+		slowTime = thePlayer.GetComponent<UnityStandardAssets.Characters.ThirdPerson.ThirdPersonUserControl> ();
     }
 		
 
@@ -146,6 +148,7 @@ public class ScreenFader : MonoBehaviour
 
             if (FadeImg.color.a >= 0.95f)
             {
+				slowTime.refreshReset();
                 objectReset.PleaseReset();
                 checkPoint.resetCharacter();
                 sceneStarting = true;
@@ -199,6 +202,7 @@ public class ScreenFader : MonoBehaviour
 
             if (otherFadeImg.color.a >= 0.95f)
             {
+				slowTime.refreshReset();
                 objectReset.PleaseReset();
                 checkPoint.resetCharacter();
                 sceneStarting = true;
