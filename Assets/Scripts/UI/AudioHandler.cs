@@ -57,9 +57,6 @@ public class AudioHandler : MonoBehaviour {
 		}
 
 		UpdateVolumes ();
-		Debug.Log (bgm.volume);
-		Debug.Log(bgm.clip.ToString());
-		bgm.volume = 0f;
 	}
 
 

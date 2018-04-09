@@ -48,6 +48,7 @@ public class ThirdPersonCamera : MonoBehaviour {
 		AudioSource[] audios = cam.GetComponents<AudioSource>();
 		bgm = audios [0];
 		heartbeat = audios [1];
+		heartbeat.volume = 0f;
 	}
 
 	private void Update()
