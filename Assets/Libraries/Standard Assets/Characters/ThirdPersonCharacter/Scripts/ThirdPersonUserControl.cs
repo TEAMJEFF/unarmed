@@ -210,5 +210,13 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 				fill.color = Color.grey;
 			}
 		}
+
+		public void refreshReset()
+		{
+			inCooldown = false;
+			timePool = TIMELIMIT;
+			timeSlider.value = TIMELIMIT;
+
+		}
 	}
 }
