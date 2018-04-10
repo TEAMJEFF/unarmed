@@ -18,7 +18,7 @@ public class StartGame : MonoBehaviour
 	void onClick()
 	{
 		//SceneManager sceneManager;		
-		SceneManager.LoadScene("levelOne", LoadSceneMode.Single);
+		SceneManager.LoadScene("Cutscene1", LoadSceneMode.Single);
 	}
 }
 
