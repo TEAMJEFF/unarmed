@@ -10,8 +10,10 @@ public class AudioHandler : MonoBehaviour {
 	private GameObject[] gameObjects;
 	private float bgmVolume;
 	private float sfxVolume;
+    public PausingScript pausing;
 
-	void Start()
+
+    void Start()
 	{
 
 		if (!PlayerPrefs.HasKey ("bgmVolume")) 
@@ -59,6 +61,17 @@ public class AudioHandler : MonoBehaviour {
 		UpdateVolumes ();
 	}
 
+    void Update()
+    {
+        if(pausing != null)
+        {
+            if(pausing.isPaused)
+            {
+                Debug.Log("Here");
+                bgm.volume = PlayerPrefs.GetFloat("bgmVolume");
+            }
+        }
+    }
 
 	public void UpdateVolumes()
 	{

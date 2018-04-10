@@ -57,4 +57,10 @@ public class menuHandler : MonoBehaviour {
 		PlayerPrefs.SetFloat ("sfxVolume", sfxSliderVol.value);
 		PlayerPrefs.Save ();
 	}
+
+    public void resetOnClose()
+    {
+        optionButtons.SetActive(false);
+        mainButtons.SetActive(true);
+    }
 }
