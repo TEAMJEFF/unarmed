@@ -12,9 +12,13 @@ public class PlayCutscene : MonoBehaviour
     public VideoPlayer videoPlayer;
     private VideoSource videoSource;
     private AudioSource cutsceneAudio;
+    public RawImage bg;
     private int skipThreshold = 0;
     public Text skipText;
-    private bool loadOnce = false;
+    private bool skipped = false;
+    private bool fadeOut = false;
+    private bool allowSync = false;
+    private float fadeRate = 0.5f;
     AsyncOperation asyncOperation;
 
     // Use this for initialization
@@ -30,52 +34,55 @@ public class PlayCutscene : MonoBehaviour
         videoPlayer.clip = cutscene;
         videoPlayer.Prepare();
 
+        asyncOperation = SceneManager.LoadSceneAsync("levelOne");
+        asyncOperation.allowSceneActivation = false;
+
         cutsceneAudio.Play();
         videoPlayer.Play();
-        
+
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.anyKey)
-        {
-            skipThreshold++;
-        }
+        //Debug.Log(asyncOperation.progress.ToString());
 
         if (Input.anyKeyDown)
         {
             skipThreshold = 0;
         }
 
-        if (!videoPlayer.isPlaying || skipThreshold > 120)
+        if (Input.anyKey)
         {
-            if (!loadOnce)
+            skipThreshold++;
+        }
+
+        if (!skipped && (!videoPlayer.isPlaying || skipThreshold > 120))
+        {
+            skipped = true;
+            fadeOut = true;
+            Destroy(videoPlayer);
+            Destroy(cutsceneAudio);
+        }
+
+
+        if (fadeOut)
+        {
+            Color newCol = bg.color;
+            if (newCol.r > 0.0001f)
             {
-                StartCoroutine(LoadScene());
-                loadOnce = true;
+                newCol.r = Mathf.Lerp(bg.color.r, 0, fadeRate * Time.deltaTime);
+                newCol.g = Mathf.Lerp(bg.color.g, 0, fadeRate * Time.deltaTime);
+                newCol.b = Mathf.Lerp(bg.color.b, 0, fadeRate * Time.deltaTime);
+                bg.color = newCol;
             }
         }
 
-    }
-
-
-    IEnumerator LoadScene()
-    {
-        Destroy(videoPlayer);
-        Destroy(cutsceneAudio);
-        skipText.text = "Level Loading...";
-        asyncOperation = SceneManager.LoadSceneAsync("levelOne");
-        int count = 0;
-        while (!asyncOperation.isDone)
+        if (!allowSync && skipped && asyncOperation.progress >= 0.9f)
         {
-            count++;
-            if (count > 10000)
-            {
-                Debug.Log("yeah its this");
-                break;
-            }
-            yield return null;
+            allowSync = true;
+            asyncOperation.allowSceneActivation = true;
         }
     }
 }

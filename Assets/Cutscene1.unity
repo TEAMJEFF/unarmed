@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.3731193, g: 0.38073996, b: 0.35872698, a: 1}
+  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
@@ -177,6 +177,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cutscene: {fileID: 32900000, guid: 1b79f770594641545a2ba6637e5a5287, type: 3}
   videoPlayer: {fileID: 586633251}
+  bg: {fileID: 860022508}
   skipText: {fileID: 1042725704}
 --- !u!222 &586633255
 CanvasRenderer:
@@ -498,7 +499,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Video Loading....
+  m_Text: 
 --- !u!222 &1042725705
 CanvasRenderer:
   m_ObjectHideFlags: 0
