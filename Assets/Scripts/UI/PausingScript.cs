@@ -14,6 +14,7 @@ public class PausingScript : MonoBehaviour {
 	private freezePlayer freeze;
 	private GameObject thePlayer;
 	MonoBehaviour unit;
+    public menuHandler handler;
 
 	void Awake()
 	{
@@ -72,6 +73,7 @@ public class PausingScript : MonoBehaviour {
 		isPaused = false;
 		UICanvas.blocksRaycasts = false;
 		UICanvas.interactable = false;
+        handler.resetOnClose();
 
 		Time.timeScale = 1f;
 		mainCam.enabled = true;
