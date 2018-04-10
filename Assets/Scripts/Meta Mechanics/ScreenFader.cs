@@ -44,10 +44,13 @@ public class ScreenFader : MonoBehaviour
         thePlayer = GameObject.FindGameObjectWithTag("Player");
         // Gets the player objects checkpoint info
         // Gets objects list
-        checkPoint = thePlayer.GetComponent<CheckPoint>();
-        objectReset = thePlayer.GetComponent<ObjectReset>();
-		freeze = thePlayer.GetComponent<freezePlayer> ();
-		slowTime = thePlayer.GetComponent<UnityStandardAssets.Characters.ThirdPerson.ThirdPersonUserControl> ();
+        if (thePlayer)
+        {
+            checkPoint = thePlayer.GetComponent<CheckPoint>();
+            objectReset = thePlayer.GetComponent<ObjectReset>();
+            freeze = thePlayer.GetComponent<freezePlayer>();
+            slowTime = thePlayer.GetComponent<UnityStandardAssets.Characters.ThirdPerson.ThirdPersonUserControl>();
+        }
     }
 		
 
@@ -97,8 +100,11 @@ public class ScreenFader : MonoBehaviour
     {
         // Fade the texture to clear.
         FadeToClear();
-		freeze.freezeOnStart ();
-
+        if (freeze)
+        {
+            freeze.freezeOnStart();
+        }
+		
         // If the texture is almost clear...
         if (FadeImg.color.a <= 0.05f)
         {
