@@ -14,6 +14,7 @@ public class ScreenFader : MonoBehaviour
 {
     public Image FadeImg;
     public Image otherFadeImg;
+	public Image slowCoolDown;
     public float fadeSpeed;
     public bool sceneStarting = true;
     private GameObject thePlayer;
@@ -149,6 +150,9 @@ public class ScreenFader : MonoBehaviour
             if (FadeImg.color.a >= 0.95f)
             {
 				slowTime.refreshReset();
+				Color colorcolor = new Color32(0x70, 0x71, 0xFF, 0xFF);
+
+				slowCoolDown.color = colorcolor;
                 objectReset.PleaseReset();
                 checkPoint.resetCharacter();
                 sceneStarting = true;
