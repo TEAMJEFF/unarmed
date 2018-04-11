@@ -12,6 +12,7 @@ public class PlayCutscene : MonoBehaviour
     public VideoPlayer videoPlayer;
     private VideoSource videoSource;
     private AudioSource cutsceneAudio;
+    public RawImage blackScreen;
     private int skipThreshold = 0;
     private bool skipped = false;
     private bool allowSync = false;
@@ -19,7 +20,6 @@ public class PlayCutscene : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        screenFader.sceneStarting = true;
         cutsceneAudio = gameObject.AddComponent<AudioSource>();
 
         cutsceneAudio.playOnAwake = false;
@@ -30,6 +30,7 @@ public class PlayCutscene : MonoBehaviour
         videoPlayer.clip = cutscene;
         videoPlayer.Prepare();
 
+        Destroy(blackScreen);
         cutsceneAudio.Play();
         videoPlayer.Play();
     }
