@@ -8,7 +8,7 @@ public class colReset : MonoBehaviour
 	public float resetSeconds;	
 	private float resetTime;
 	private int SceneNumber;
-	private bool isHit;
+	private bool isHit = false;
 	private Scene theScene;
 	private ScreenFader fadeScr;
 
