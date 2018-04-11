@@ -6,9 +6,10 @@ using UnityEngine.SceneManagement;
 public class StartGame : MonoBehaviour
 {
 	public Button button;
+    public ScreenFader screenFader;
 
-	// Use this for initialization
-	void Start ()
+    // Use this for initialization
+    void Start ()
 	{
 
 		Button btn = button.GetComponent<Button> ();
@@ -17,8 +18,9 @@ public class StartGame : MonoBehaviour
 	
 	void onClick()
 	{
-		//SceneManager sceneManager;		
-		SceneManager.LoadScene("Cutscene1", LoadSceneMode.Single);
+        //SceneManager sceneManager;		
+        //SceneManager.LoadScene("Cutscene1", LoadSceneMode.Single);
+        screenFader.EndScene(1);
 	}
 }
 
