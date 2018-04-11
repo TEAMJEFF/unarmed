@@ -16,6 +16,7 @@ public class freezePlayer : MonoBehaviour {
 	private RepelBlast stopBlast;
 
 	public Text clickToClose;
+	string txt = "";
 
 	// Use this for initialization
 	void Start () 
@@ -53,6 +54,7 @@ public class freezePlayer : MonoBehaviour {
 			if (timer < Time.unscaledTime) 
 			{
 				//Debug.Log ("Time has passed");
+				clickToClose.text = txt;
 				clickToClose.enabled = true;
 				if(Input.GetButtonDown("Fire1"))
 				{
@@ -62,7 +64,7 @@ public class freezePlayer : MonoBehaviour {
 					stopBlast.enabled = true;
 					inDefFreeze = false;
 					timer = 0f;
-					freezeOnStart (1f);
+					freezeOnStart (0.05f);
 				}
 			}
 
@@ -91,11 +93,12 @@ public class freezePlayer : MonoBehaviour {
 	{
 		if (col.tag == "GameController") 
 		{
+			txt = col.GetComponent<Text> ().text;
 			control.enabled = false;
 			character.enabled = false;
 			inDefFreeze = true;
 			stopBlast.enabled = false;
-			timer = Time.unscaledTime + 2f;
+			timer = Time.unscaledTime + 0.5f;
 		}
 	}
 
